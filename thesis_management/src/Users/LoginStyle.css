@@ -1,0 +1,96 @@
+/* LoginStyle.css */
+.background {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    background-image: url('C:\Users\pc\Desktop\web\thesis_web\src\Images\1.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.background > div:first-child {
+    margin-bottom: 10px;
+}
+
+.Login_Box {
+    background-color: #747958ec;
+    padding: 20px; 
+    border-radius: 8px; 
+    height: 400px;
+    width: 500px; 
+    padding: 30px;
+}
+
+.Login_text {
+    margin-bottom: 20px; 
+    color: white; 
+    text-align: center; 
+}
+
+.Login_text h1 {
+    font-size: 5rem; 
+    font-weight: bold; 
+}
+
+.Login_TextBox {
+    border: none; 
+    border-bottom: 2px solid white; 
+    background-color: transparent; 
+    color: white; 
+    padding: 10px 0; 
+    border-radius: 0;
+    width: 100%;
+    outline: none; 
+    box-shadow: none; 
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.Login_TextBox:focus {
+    border-bottom: 2px solid #747958;
+    box-shadow: none; 
+    outline: none; 
+    background-color: #747958;
+    color: white;
+}
+
+.Login_TextBox::placeholder {
+    color: rgba(255, 255, 255, 0.7); 
+}
+
+.password-toggle-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #fff; 
+    font-size: 1.2rem;
+}
+
+.Login_button {
+    background-color: #dee1d7;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: none;
+    margin-top: 20px;
+    color: #747958;
+    transition: background-color 0.3s ease;
+}
+
+.Login_button:hover {
+    background-color: #747958; 
+    color: #fff;
+}
+.Forget_pass{
+    color: white;
+    text-align: right;
+    margin-top: 20px;
+}
+
