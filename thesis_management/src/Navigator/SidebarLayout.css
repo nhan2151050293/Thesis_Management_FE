@@ -5,12 +5,17 @@
 }
 
 .sidebar {
+    position: fixed; /* Fixed position to keep it in place */
+    top: 0;
+    left: 0;
     width: 300px;
-    background-color:#747958;
+    height: 100%; /* Full height to cover the viewport height */
+    background-color: #747958;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: auto; /* Allow scrolling if content exceeds height */
 }
 
 .logo {
@@ -22,6 +27,7 @@
     height: 150px;
     object-fit: contain;
 }
+
 .text {
     margin-bottom: 20px; 
     color: white; 
@@ -58,13 +64,10 @@
     background-color: #dee2e6;
 }
 
-.active-link {
-    background-color: #007bff;
-    color: white;
-}
 
 .content {
-    flex-grow: 1;
-    padding: 20px;
+    margin-left: 300px; 
     background-color: #f1f3f5;
+    flex-grow: 1; 
+    overflow-y: auto; 
 }
