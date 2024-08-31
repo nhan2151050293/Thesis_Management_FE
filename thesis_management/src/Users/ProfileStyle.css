@@ -72,6 +72,8 @@
 
 .profile-info p {
     margin: 5px 0;
+    font-weight: bold;
+    color: #747958;
 }
 
 .camera-icon {

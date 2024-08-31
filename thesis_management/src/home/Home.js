@@ -1,7 +1,10 @@
 import React, { useState, useEffect, memo, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import APIs, { endpoints } from '../configs/APIs';
 import { MyUserContext } from '../configs/Contexts';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart as faHeartLine, faComment as faCommentLine } from '@fortawesome/free-regular-svg-icons'; 
+import { faHeart as faHeartSolid, faBell as faBellSolid, faEnvelope as faEnvelopeSolid } from '@fortawesome/free-solid-svg-icons'; 
+import { useNavigate } from 'react-router-dom'; 
 import './Home.css'; 
 
 const Home = () => {
@@ -10,12 +13,16 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [commentModalVisible, setCommentModalVisible] = useState(false); 
   const [comments, setComments] = useState([]);
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [newPostContent, setNewPostContent] = useState("");
   const [newCommentContent, setNewCommentContent] = useState("");
+  const [postContent, setPostContent] = useState(""); 
+  const [postAuthor, setPostAuthor] = useState(""); 
+  const [loadingComments, setLoadingComments] = useState(false); // State for loading comments
   const user = useContext(MyUserContext);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     fetchPosts(currentPage, searchQuery);
@@ -43,6 +50,32 @@ const Home = () => {
     }
   };
 
+  const fetchComments = async (postId, page = 1) => {
+    const url = `${endpoints.comments(postId)}?page=${page}`;
+    try {
+        setLoadingComments(true);
+        const token = localStorage.getItem("token");
+        const res = await APIs.get(url, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (page === 1) {
+            setComments(res.data.results || []); 
+        } else {
+            setComments(current => [...current, ...res.data.results]);
+        }
+        // No need to setCurrentCommentPage since it's not defined
+    } catch (ex) {
+        if (page === 1) {
+            setComments([]); 
+        }
+        console.error(ex);
+    } finally {
+        setLoadingComments(false);
+    }
+  };
+
   const handlePost = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -66,67 +99,105 @@ const Home = () => {
     }
   };
 
-  const handleProfile = () => {
-    navigate('/profile');
+  const handlePostComment = async () => {
+    try {
+        const token = localStorage.getItem("token");
+        const formData = new FormData();
+        formData.append("content", newCommentContent);
+
+        const response = await APIs.post(endpoints.commentsPost(selectedPostId), formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+            },
+        });
+
+        if (response.status === 201) {
+            fetchComments(selectedPostId); 
+            setPosts(posts => posts.map(post =>
+                post.id === selectedPostId
+                    ? { ...post, comment_count: post.comment_count + 1 }
+                    : post
+            ));
+            setNewCommentContent("");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+  };
+
+  const handleShowComments = (postId, content, author) => {
+    setSelectedPostId(postId);
+    setPostContent(content);
+    setPostAuthor(author);
+    fetchComments(postId); 
+    setCommentModalVisible(true);
   };
 
   const handleLike = async (postId) => {
-    // Implement like functionality here
-    console.log(`Liked post with id: ${postId}`);
-    // Optionally, you can update the like count here
-  };
+    const url = endpoints.like(postId);
 
-  const handleShowComments = (postId) => {
-    if (selectedPostId === postId) {
-      // Toggle comments visibility if the same post is clicked
-      setSelectedPostId(null);
-      setComments([]);
-    } else {
-      // Fetch comments for the selected post
-      // Example:
-      // fetchComments(postId);
-      setSelectedPostId(postId);
-      // Fetch comments for the selected post
-      // setComments(fetchedComments);
+    try {
+      const token = localStorage.getItem("token");
+      const response = await APIs.post(url, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 200) {
+        setPosts(posts.map(post =>
+          post.id === postId ? { ...post, liked: !post.liked, like_count: post.liked ? post.like_count - 1 : post.like_count + 1 } : post
+        ));
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
   const RenderItem = memo(({ item }) => {
     const [expanded, setExpanded] = useState(false);
-    const maxContentHeight = 50;
+    const [isLiked, setIsLiked] = useState(item.liked || false);
+    const [likes, setLikes] = useState(item.like_count);
+
+    const handleLikeClick = () => {
+      handleLike(item.id);
+      setIsLiked(prev => !prev);
+      setLikes(prev => isLiked ? prev - 1 : prev + 1);
+    };
 
     return (
-      <div key={item.id} className="post-item">
+      <div key={item.id} className="post-container">
+        {/* Avatar và tên người đăng */}
         <div className="account">
           <img src={item.user.avatar} alt="avatar" className="avatar" />
           <span className="username">{item.user.first_name}_{item.user.last_name}</span>
         </div>
-        <div className="post-content">
-          <span className={expanded ? 'expanded' : ''}>
-            {item.content}
-          </span>
-          {item.content.length > maxContentHeight && !expanded && (
-            <button onClick={() => setExpanded(!expanded)} className="read-more">
-              Read more
-            </button>
-          )}
-        </div>
-        <div className="actions">
-          <button onClick={() => handleLike(item.id)} className="like-button">Like</button>
-          <button onClick={() => handleShowComments(item.id)} className="comment-button">Comment</button>
-        </div>
-        <span>{item.like_count} likes • {item.comment_count} comments</span>
-        {/* Render comments if this post is selected */}
-        {selectedPostId === item.id && (
-          <div className="comments">
-            {comments.map((comment, index) => (
-              <div key={index} className="comment-item">
-                <span className="comment-username">{comment.user.first_name}_{comment.user.last_name}</span>
-                <p>{comment.content}</p>
-              </div>
-            ))}
+
+        {/* Nội dung bài đăng */}
+        <div className="post-item">
+          <div className="post-content">
+            <span className={expanded ? 'expanded' : ''}>
+              {item.content}
+            </span>
+            {item.content.length > 50 && !expanded && (
+              <button onClick={() => setExpanded(!expanded)} className="read-more">
+                Read more
+              </button>
+            )}
           </div>
-        )}
+        </div>
+
+        {/* Nút Like và Comment */}
+        <div className="actions">
+          <button onClick={handleLikeClick} className="action-button">
+            <FontAwesomeIcon icon={isLiked ? faHeartSolid : faHeartLine} />
+          </button>
+          <button onClick={() => handleShowComments(item.id, item.content, `${item.user.first_name} ${item.user.last_name}`)} className="action-button">
+            <FontAwesomeIcon icon={faCommentLine} />
+          </button>
+        </div>
+        <span>{likes} likes • {item.comment_count} comments</span>
       </div>
     );
   });
@@ -135,9 +206,13 @@ const Home = () => {
     <div className="home-container">
       <header className="header">
         <h1>Home</h1>
-        <div className="header-actions">
-          <button onClick={handleProfile}>Profile</button>
-          {/* Add more actions like notifications, etc. */}
+        <div className="header-icons">
+          <button className="icon-button" onClick={() => navigate('/contactlist')}>
+            <FontAwesomeIcon icon={faEnvelopeSolid} />
+          </button>
+          <button className="icon-button">
+            <FontAwesomeIcon icon={faBellSolid} />
+          </button>
         </div>
       </header>
 
@@ -169,6 +244,32 @@ const Home = () => {
               className="modal-textarea"
             />
             <button onClick={handlePost} className="post-button">Post</button>
+            <button onClick={() => setModalVisible(false)} className="close-button">Close</button>
+          </div>
+        </div>
+      )}
+
+      {commentModalVisible && (
+        <div className="modal">
+          <div className="modal-content">
+            <h1>{postContent}</h1>
+            <p><strong>{postAuthor}</strong></p>
+            <div className="comments">
+              {comments.map((comment, index) => (
+                <div key={index} className="comment-item">
+                  <span className="comment-username">{comment.user.first_name}_{comment.user.last_name}</span>
+                  <p>{comment.content}</p>
+                </div>
+              ))}
+            </div>
+            <textarea
+              placeholder="Add a comment..."
+              value={newCommentContent}
+              onChange={(e) => setNewCommentContent(e.target.value)}
+              className="comment-textarea"
+            />
+            <button onClick={handlePostComment} className="comment-button">Submit</button>
+            <button onClick={() => setCommentModalVisible(false)} className="close-button">Close</button>
           </div>
         </div>
       )}

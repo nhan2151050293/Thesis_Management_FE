@@ -1,270 +1,200 @@
-.container {
-    display: flex;
-    flex: 1;
-    background-color: #f3e5e4;
-  }
-  
-  .TopBackGround {
-    background-color: #da91a4;
-    height: 12%;
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .TopIcon {
-    left: 200%;
-    top: 50%;
-    margin-right: 20px;
-  }
-  
-  .greeting {
-    font-size: 25px;
-    top: 12%;
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    color: #f3e5e4;
-    margin-left: 30px;
-  }
-  
-  .postContainer {
-    padding: 20px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .postContent {
-    font-size: 16px;
-  }
-  
-  .postDate {
-    font-size: 12px;
-    color: #888;
-  }
-  
-  .itemText {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  .item {
-    padding: 15px;
-    border-bottom: 1px solid #da91a4;
-    border: 1px solid #da91a4;
-    height: 280px;
-    margin-left: 30px;
-    margin-right: 30px;
-  }
-  
-  .account {
-    display: flex;
-    flex-direction: row;
-    margin: 30px;
-    margin-bottom: 10px;
-    align-items: center;
-  }
-  
-  .Username {
-    font-size: 18px;
-    padding-left: 3%;
-  }
-  
-  .accountcmt {
-    display: flex;
-    flex-direction: row;
-    margin: 20px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-  }
-  
-  .Usernamecmt {
-    font-size: 12px;
-    font-weight: bold;
-    padding-left: 10px;
-  }
-  
-  .textcmt {
-    font-size: 16px;
-    padding-top: 2px;
-    padding-left: 10px;
-  }
-  
-  .textcmttime {
-    font-size: 10px;
-    padding-top: 2px;
-    padding-left: 2%;
-    color: grey;
-  }
-  
-  .IconTop {
-    position: absolute;
-    left: 90%;
-  }
-  
-  .IconTop2 {
-    position: absolute;
-    left: 95%;
-  }
-  
-  .Icon {
-    bottom: 6%;
-    padding-right: 5%;
-  }
-  
-  .like {
-    font-weight: bold;
-    color: grey;
-    bottom: 4%;
-    margin-left: 10%;
-  }
-  
-  .modalContainer {
-    background-color: rgba(0, 0, 0, 0.1);
-    height: 800px;
-  }
-  
-  .modalContent {
-    background-color: white;
-    padding: 10px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    height: 50%;
-    top: 50%;
-  }
-  
-  .modalContent2 {
-    background-color: white;
-    padding: 10px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    height: 77%;
-    top: 22%;
-  }
-  
-  .modalContent3 {
-    background-color: white;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    height: 30%;
-    width: 50%;
-    top: 40%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-  }
-  
-  .modalContent4 {
-    background-color: white;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    height: 60%;
-    width: 70%;
-    top: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-  }
-  
-  .Post {
-    display: flex;
-    flex-direction: row;
-    border-bottom: 10px solid #da91a4;
-    padding: 20px;
-  }
-  
-  .postButton {
-    align-self: center;
-    margin-left: 15px;
-  }
-  
-  .textPost {
-    color: grey;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .Avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 150px;
-  }
-  
-  .buttonPost {
-    background-color: #da91a4;
-  }
-  
-  .buttonClose {
-    border-color: #da91a4;
-    margin: 10px;
-    margin-top: 30px;
-  }
-  
-  .comment {
-    display: flex;
-    flex-direction: row;
-    border-top: 2px solid #da91a4;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  
-  .postcomment {
-    background-color: #da91a4;
-    position: absolute;
-    left: 80%;
-    top: 20%;
-    display: flex;
-    align-items: center;
-  }
-  
-  .input {
-    margin-left: 1%;
-    margin-right: 21%;
-    flex: 1;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    min-height: 10px;
-    max-height: 20px;
-    text-align: center;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-  
-  .input2 {
-    flex: 1;
-    border: 1px solid #da91a4;
-    border-radius: 20px;
-    width: 100%;
-    min-height: 65%;
-    max-height: 30px;
-    text-align: center;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-size: 20px;
-  }
-  
-  .minimenu {
-    left: 10%;
-  }
-  
-  .minimenu2 {
-    right: 50%;
-    top: 10%;
-    margin-bottom: 10px;
-  }
-  
-  .minimenuIcon {
-    background-color: #da91a4;
-    padding: 10px;
-  }
-  
-  .minimenuText {
-    color: white;
-    font-size: 15px;
-  }
-  
+.home-container {
+  padding-left: 5px;
+  background-color: #dee1d7;
+  background-size: cover;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #747958;
+  color: #dee1d7;
+  position: fixed;
+  width: 100%;
+}
+
+.header h1 {
+  font-size: 4rem;
+  padding-right: 250px;
+}
+
+.post-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-left: 3%;
+  margin-right: 3%;
+  padding-top: 10%;
+}
+
+.post-input-field {
+  flex: 1;
+  border: 1px solid #747958;
+  border-radius: 20px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 1px solid #747958;
+}
+
+.posts {
+  margin-top: 20px;
+}
+
+.post-container {
+  padding-bottom: 2%;
+  margin-left: 7%;
+  margin-right:5%;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 16px;
+  color: #747958;
+}
+
+.post-item {
+  border: 2px solid #747958;
+  padding: 20px;
+  background-color: #dee1d7;
+}
+
+.post-content {
+  font-size: 16px;
+}
+
+.read-more {
+  margin-top: 10px;
+  color: #747958;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.actions button {
+  margin-right: 10px;
+}
+
+.comments {
+  margin-top: 15px;
+}
+
+.comment-item {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.action-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #747958;
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+.header-icons {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #dee1d7;
+}
+
+.icon-button:hover {
+  color: #8F9668;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+}
+
+.post-content {
+  margin-bottom: 20px;
+}
+
+.comments {
+  margin-bottom: 20px;
+}
+
+.comment-item {
+  margin-bottom: 10px;
+}
+
+.comment-username {
+  font-weight: bold;
+}
+
+.comment-textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.comment-button,
+.post-button,
+.close-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.close-button {
+  background-color: #6c757d;
+}
