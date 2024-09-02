@@ -7,6 +7,7 @@ import ContactList from './Chat/ContactList';
 import Menu from './Menu/Menu';
 import Profile from './Users/Profile';
 import Home from './home/Home';
+import Students from './Students/Students';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                     <Route path="/contactlist" element={<ContactList />} />
                     <Route path="/menu" element={<Menu />} />
                     <Route path="/profile" element={<Profile/>} />
+                    <Route path="/students" element={<Students/>} />
                 </Route>
             </Routes>
         </Router>

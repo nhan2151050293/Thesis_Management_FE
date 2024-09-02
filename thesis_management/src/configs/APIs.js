@@ -1,8 +1,9 @@
 import axios from "axios";
 
-const BASE_URL = 'http://192.168.1.13:8000/';
+const BASE_URL = 'http://192.168.2.24:8000/';
 
 export const endpoints = {
+    users: '/users/',
     login: '/o/token/',
     'current-user': '/users/current-user/',
     'thesis-by-user-student': (userthese) => `/theses/${userthese}/`,
@@ -15,6 +16,8 @@ export const endpoints = {
     lecturers: '/lecturers/',
     positions: '/positions/',
     students: '/students/',
+    'delete-student': (student_id) => `/students/${student_id}/`,
+    'update-student': (student_id) => `/students/${student_id}/`,
     councils: '/councils/',
     council_details: '/council_details/members/',
     council_details_id: '/council_details/',
