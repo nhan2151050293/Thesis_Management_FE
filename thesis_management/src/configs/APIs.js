@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = 'http://192.168.2.24:8000/';
+const BASE_URL = 'http://192.168.1.10:8000/';
 
 export const endpoints = {
     users: '/users/',
@@ -14,6 +14,8 @@ export const endpoints = {
     'council-theses': (council_Id) => `/councils/${council_Id}/theses/`,
     theses: '/theses/',
     lecturers: '/lecturers/',
+    'delete-lecturer': (lecturer_id) => `/lecturers/${lecturer_id}/`,
+    'update-lecturer': (lecturer_id) => `/lecturers/${lecturer_id}/`,
     positions: '/positions/',
     students: '/students/',
     'delete-student': (student_id) => `/students/${student_id}/`,
@@ -36,7 +38,8 @@ export const endpoints = {
     commentsDP: (id) => `/comments/${id}/`,
     stats: '/stats/',
     majors: '/majors/', 
-    school_years: '/school_years/'
+    school_years: '/school_years/', 
+    faculties: '/faculties/'
 }
 
 export const authApi = (accessToken) => axios.create({

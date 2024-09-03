@@ -52,10 +52,18 @@ const Login = () => {
             // });
 
             // id va secret cua Nhat nha
+            // const response = await APIs.post(endpoints['login'], {
+            //     ...user,
+            //     client_id: 'RqYePb1CUqm0pBiSrfXxW5umhk2llkWvvwzoY7FE',
+            //     client_secret: 'muVyIOPbrLG2ENFPuSnqaVetsq18tUyataZhwURAybuHfeIJ4oaUK3cXL4iOhlEkj62wIGouAkqR5Ecxq41XxdsoLFCYHNdOkyXJkAoyagDosU5mGSMqyccdkJfFTggR',
+            //     grant_type: 'password',
+            // });
+
+            //Hoaitam
             const response = await APIs.post(endpoints['login'], {
                 ...user,
-                client_id: 'RqYePb1CUqm0pBiSrfXxW5umhk2llkWvvwzoY7FE',
-                client_secret: 'muVyIOPbrLG2ENFPuSnqaVetsq18tUyataZhwURAybuHfeIJ4oaUK3cXL4iOhlEkj62wIGouAkqR5Ecxq41XxdsoLFCYHNdOkyXJkAoyagDosU5mGSMqyccdkJfFTggR',
+                client_id: 'raLOPdSRcjjZZ6GayaO0Z5mKLWdc3qzDiV2OrKNM',
+                client_secret: '3tLQNOpzys13Fk0li8ZqHnygjluhvAxc5tptVfAPfTem41H02CppNS2dqSp52ngMeqHgmCXSzePadGsqvZbfW5MlvPlW3Fnc4z1p9OIZF6MPFje7HCYU81AwjUOJn2MO',
                 grant_type: 'password',
             });
     

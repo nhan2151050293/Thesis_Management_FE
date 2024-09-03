@@ -39,6 +39,11 @@ const SidebarLayout = () => {
                             Quản lý sinh viên
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/lecturer" className="sidebar-link" activeClassName="active-link">
+                            Quản lý giảng viên
+                        </NavLink>
+                    </li>
                 </ul>
             </nav>
             <div className="content">
