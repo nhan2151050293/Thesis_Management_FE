@@ -8,7 +8,8 @@ import Menu from './Menu/Menu';
 import Profile from './Users/Profile';
 import Home from './home/Home';
 import Students from './Students/Students';
-import Lecturer from './Lecturer/Lecturer'
+import Lecturer from './Lecturer/Lecturer';
+import Theses from './Theses/Theses';
 
 function App() {
     return (
@@ -19,9 +20,10 @@ function App() {
                     <Route path="/home" element={<Home />} />
                     <Route path="/contactlist" element={<ContactList />} />
                     <Route path="/menu" element={<Menu />} />
-                    <Route path="/profile" element={<Profile/>} />
-                    <Route path="/students" element={<Students/>} />
-                    <Route path="/lecturer" element={<Lecturer/>} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/students" element={<Students />} />
+                    <Route path="/lecturer" element={<Lecturer />} />
+                    <Route path="/theses" element={<Theses />} />
                 </Route>
             </Routes>
         </Router>

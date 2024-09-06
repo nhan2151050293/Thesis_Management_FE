@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-const BASE_URL = 'http://192.168.1.10:8000/';
+const BASE_URL = 'http://192.168.1.12:8000/';
 
 export const endpoints = {
     users: '/users/',
@@ -13,6 +13,7 @@ export const endpoints = {
     'council-members': (council_Id) => `/councils/${council_Id}/members/`,
     'council-theses': (council_Id) => `/councils/${council_Id}/theses/`,
     theses: '/theses/',
+    'delete-thesis': (thesis_code) => `/theses/${thesis_code}/`,
     lecturers: '/lecturers/',
     'delete-lecturer': (lecturer_id) => `/lecturers/${lecturer_id}/`,
     'update-lecturer': (lecturer_id) => `/lecturers/${lecturer_id}/`,
@@ -37,18 +38,19 @@ export const endpoints = {
     delPost: (id) => `/posts/${id}/`,
     commentsDP: (id) => `/comments/${id}/`,
     stats: '/stats/',
-    majors: '/majors/', 
-    school_years: '/school_years/', 
-    faculties: '/faculties/'
-}
+    majors: '/majors/',
+    school_years: '/school_years/',
+    faculties: '/faculties/',
+};
 
-export const authApi = (accessToken) => axios.create({
-    baseURL: BASE_URL,
-    headers: {
-        Authorization: `Bearer ${accessToken}`,
-    }
-});
+export const authApi = (accessToken) =>
+    axios.create({
+        baseURL: BASE_URL,
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
 
 export default axios.create({
-    baseURL: BASE_URL
+    baseURL: BASE_URL,
 });
