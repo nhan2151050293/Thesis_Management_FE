@@ -1,4 +1,3 @@
-// SidebarLayout.js
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import './SidebarLayout.css'; // Custom styles
@@ -8,14 +7,10 @@ const SidebarLayout = () => {
         <div className="sidebar-layout">
             <nav className="sidebar">
                 <div className="logo">
-                    <img
-                        src="https://res.cloudinary.com/du6trravq/image/upload/v1724776000/LogoWeb.png"
-                        className="logo-img"
-                        alt="Logo"
-                    />
+                    <img src="https://res.cloudinary.com/du6trravq/image/upload/v1724776000/LogoWeb.png" className="logo-img" alt="Logo"/>
                 </div>
                 <div className="text">
-                    <h1>QUẢN LÍ KHÓA LUẬN TỐT NGHIỆP</h1>
+                        <h1>QUẢN LÍ KHÓA LUẬN TỐT NGHIỆP</h1>
                 </div>
                 <ul className="sidebar-options">
                     <li>
@@ -38,25 +33,10 @@ const SidebarLayout = () => {
                             Profile
                         </NavLink>
                     </li>
-                    <li>
-                        <NavLink to="/students" className="sidebar-link" activeClassName="active-link">
-                            Quản lý sinh viên
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/lecturer" className="sidebar-link" activeClassName="active-link">
-                            Quản lý giảng viên
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/theses" className="sidebar-link" activeClassName="active-link">
-                            Quản lý khóa luận
-                        </NavLink>
-                    </li>
                 </ul>
             </nav>
             <div className="content">
-                <Outlet /> {/* This will render the matched page */}
+                <Outlet /> 
             </div>
         </div>
     );

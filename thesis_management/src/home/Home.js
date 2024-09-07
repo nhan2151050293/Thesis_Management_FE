@@ -3,7 +3,7 @@ import APIs, { endpoints } from '../configs/APIs';
 import { MyUserContext } from '../configs/Contexts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as faHeartLine, faComment as faCommentLine } from '@fortawesome/free-regular-svg-icons'; 
-import { faHeart as faHeartSolid, faBell as faBellSolid, faEnvelope as faEnvelopeSolid } from '@fortawesome/free-solid-svg-icons'; 
+import { faHeart as faHeartSolid, faBell as faBellSolid, faEnvelope as faEnvelopeSolid,faPaperPlane,faTimes } from '@fortawesome/free-solid-svg-icons'; 
 import { useNavigate } from 'react-router-dom'; 
 import './Home.css'; 
 
@@ -13,16 +13,16 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const [commentModalVisible, setCommentModalVisible] = useState(false); 
+  const [commentModalVisible, setCommentModalVisible] = useState(false);
   const [comments, setComments] = useState([]);
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [newPostContent, setNewPostContent] = useState("");
   const [newCommentContent, setNewCommentContent] = useState("");
-  const [postContent, setPostContent] = useState(""); 
-  const [postAuthor, setPostAuthor] = useState(""); 
+  const [postContent, setPostContent] = useState("");
+  const [postAuthor, setPostAuthor] = useState("");
   const [loadingComments, setLoadingComments] = useState(false); // State for loading comments
   const user = useContext(MyUserContext);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPosts(currentPage, searchQuery);
@@ -53,26 +53,26 @@ const Home = () => {
   const fetchComments = async (postId, page = 1) => {
     const url = `${endpoints.comments(postId)}?page=${page}`;
     try {
-        setLoadingComments(true);
-        const token = localStorage.getItem("token");
-        const res = await APIs.get(url, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        if (page === 1) {
-            setComments(res.data.results || []); 
-        } else {
-            setComments(current => [...current, ...res.data.results]);
+      setLoadingComments(true);
+      const token = localStorage.getItem("token");
+      const res = await APIs.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-        // No need to setCurrentCommentPage since it's not defined
+      });
+      if (page === 1) {
+        setComments(res.data.results || []);
+      } else {
+        setComments(current => [...current, ...res.data.results]);
+      }
+      // No need to setCurrentCommentPage since it's not defined
     } catch (ex) {
-        if (page === 1) {
-            setComments([]); 
-        }
-        console.error(ex);
+      if (page === 1) {
+        setComments([]);
+      }
+      console.error(ex);
     } finally {
-        setLoadingComments(false);
+      setLoadingComments(false);
     }
   };
 
@@ -101,28 +101,28 @@ const Home = () => {
 
   const handlePostComment = async () => {
     try {
-        const token = localStorage.getItem("token");
-        const formData = new FormData();
-        formData.append("content", newCommentContent);
+      const token = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append("content", newCommentContent);
 
-        const response = await APIs.post(endpoints.commentsPost(selectedPostId), formData, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "multipart/form-data",
-            },
-        });
+      const response = await APIs.post(endpoints.commentsPost(selectedPostId), formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-        if (response.status === 201) {
-            fetchComments(selectedPostId); 
-            setPosts(posts => posts.map(post =>
-                post.id === selectedPostId
-                    ? { ...post, comment_count: post.comment_count + 1 }
-                    : post
-            ));
-            setNewCommentContent("");
-        }
+      if (response.status === 201) {
+        fetchComments(selectedPostId);
+        setPosts(posts => posts.map(post =>
+          post.id === selectedPostId
+            ? { ...post, comment_count: post.comment_count + 1 }
+            : post
+        ));
+        setNewCommentContent("");
+      }
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
   };
 
@@ -130,7 +130,7 @@ const Home = () => {
     setSelectedPostId(postId);
     setPostContent(content);
     setPostAuthor(author);
-    fetchComments(postId); 
+    fetchComments(postId);
     setCommentModalVisible(true);
   };
 
@@ -237,23 +237,34 @@ const Home = () => {
       {modalVisible && (
         <div className="modal">
           <div className="modal-content">
-            <textarea
-              placeholder="Enter your post content..."
-              value={newPostContent}
-              onChange={(e) => setNewPostContent(e.target.value)}
-              className="modal-textarea"
-            />
-            <button onClick={handlePost} className="post-button">Post</button>
-            <button onClick={() => setModalVisible(false)} className="close-button">Close</button>
+          <div className="comment-input-container">
+              <textarea
+                placeholder="Enter your post content..."
+                value={newPostContent}
+                onChange={(e) => setNewPostContent(e.target.value)}
+                className="post-textarea"
+              />
+              <button
+                onClick={handlePost}
+                className="comment-send-icon"
+                disabled={!newPostContent.trim()} 
+              >
+                <FontAwesomeIcon icon={faPaperPlane} />
+            </button>
           </div>
+            <button onClick={() => setModalVisible(false)} className="close-button">Close</button>
+            </div>
         </div>
       )}
 
       {commentModalVisible && (
         <div className="modal">
           <div className="modal-content">
-            <h1>{postContent}</h1>
-            <p><strong>{postAuthor}</strong></p>
+          <button onClick={() => setCommentModalVisible(false)} className="close-modal-icon"> <FontAwesomeIcon icon={faTimes} /></button>
+            <p><strong>Bài viết của {postAuthor}</strong></p>
+            <div className="post-content-container">
+              <p>{postContent}</p>
+            </div>
             <div className="comments">
               {comments.map((comment, index) => (
                 <div key={index} className="comment-item">
@@ -262,17 +273,26 @@ const Home = () => {
                 </div>
               ))}
             </div>
-            <textarea
-              placeholder="Add a comment..."
-              value={newCommentContent}
-              onChange={(e) => setNewCommentContent(e.target.value)}
-              className="comment-textarea"
-            />
-            <button onClick={handlePostComment} className="comment-button">Submit</button>
-            <button onClick={() => setCommentModalVisible(false)} className="close-button">Close</button>
+            <div className="comment-input-container">
+              <textarea
+                placeholder="Add a comment..."
+                value={newCommentContent}
+                onChange={(e) => setNewCommentContent(e.target.value)}
+                className="comment-textarea"
+              />
+              <button
+                onClick={handlePostComment}
+                className="comment-send-icon"
+                disabled={!newCommentContent.trim()} // Disable if no content
+              >
+                <FontAwesomeIcon icon={faPaperPlane} />
+              </button>
+            </div>
+
           </div>
         </div>
       )}
+
     </div>
   );
 };

@@ -276,7 +276,7 @@ const Profile = () => {
                     <Button variant="secondary" onClick={() => setModalVisible(false)}>
                         Đóng
                     </Button>
-                    <Button variant="primary" onClick={handleChangePassword}>
+                    <Button variant="primary" onClick={handleChangePassword} className="button">
                         Lưu thay đổi
                     </Button>
                 </Modal.Footer>

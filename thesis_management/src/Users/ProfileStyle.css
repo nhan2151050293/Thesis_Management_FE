@@ -102,3 +102,11 @@
     cursor: pointer;
 }
 
+.button{
+    background-color: #747958;
+    border: 0cm;
+}
+
+.button:hover{
+    background-color: #a3a88a;
+}

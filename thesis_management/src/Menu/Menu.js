@@ -1,16 +1,65 @@
-import React, { useState } from 'react';
-import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './MenuStyle.css'
-
+import React, { useContext } from 'react';
+import { MyUserContext } from '../configs/Contexts';
+import { useNavigate } from 'react-router-dom';
+import './MenuStyle.css';
 
 const Menu = () => {
+    const user = useContext(MyUserContext);
+    const navigate = useNavigate();
 
-  return (
-      <div className='background'>
-      <h1>hello Menu</h1>
-      </div>
+    if (!user) {
+        return <div>Loading...</div>;
+    }
+
+    const handleNavigation = (route) => {
+        navigate(route);
+    };
+
+    return (
+        <div className="Menu-container">
+            <div className="Menu-header">
+                <h1 className="Menu-title">MENU</h1>
+            </div>
+            <div className="Menu-content">
+                {user.role === 'ministry' && (
+                    <div className="Menu-grid">
+                        <button className="Menu-button" onClick={() => handleNavigation('/students')}>
+                            Quản lí học sinh
+                        </button>
+                        <button className="Menu-button" onClick={() => handleNavigation('/lecturer')}>
+                            Quản lí giảng viên
+                        </button>
+                        <button className="Menu-button" onClick={() => handleNavigation('/theses')}>
+                            Quản lí khóa luận
+                        </button>
+                    </div>
+                )}
+                {user.role === 'lecturer' && (
+                    <div className="Menu-grid">
+                        <button className="Menu-button" onClick={() => handleNavigation('/grade-studies')}>
+                            Grade Studies
+                        </button>
+                        <button className="Menu-button" onClick={() => handleNavigation('/councils')}>
+                            Councils
+                        </button>
+                        <button className="Menu-button" onClick={() => handleNavigation('/student-list')}>
+                            Student List
+                        </button>
+                    </div>
+                )}
+                {user.role === 'student' && (
+                    <div className="Menu-grid">
+                        <button className="Menu-button" onClick={() => handleNavigation('/study')}>
+                            Thông tin khóa luận
+                        </button>
+                        <button className="Menu-button" onClick={() => handleNavigation('/study')}>
+                            Nộp báo cáo
+                        </button>
+                    </div>
+                )}
+            </div>
+        </div>
     );
-}
+};
 
 export default Menu;

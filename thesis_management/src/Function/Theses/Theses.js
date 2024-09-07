@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Alert, Modal, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { MyUserContext } from '../configs/Contexts';
-import APIs, { authApi, endpoints } from '../configs/APIs';
+import { MyUserContext } from '../../configs/Contexts';
+import APIs, { authApi, endpoints } from '../../configs/APIs';
 import moment from 'moment';
 import './Theses.css';
 import { faL } from '@fortawesome/free-solid-svg-icons/faL';

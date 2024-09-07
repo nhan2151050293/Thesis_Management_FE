@@ -20,7 +20,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
     /* Tùy chỉnh kiểu chữ và căn chỉnh */
     min-width: 300px; /* Đảm bảo mỗi item có chiều rộng tối thiểu */
-    
 }
 
 /* Tiêu đề của trang */
@@ -32,6 +31,8 @@
     margin-bottom: 20px;
     background-color: #747958;
     height: 80px;
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 /* Tiêu đề sinh viên */
@@ -40,14 +41,14 @@
     color: #dee1d7;
 }
 
-
 .students-table {
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
 }
 
-.students-table th, .students-table td {
+.students-table th,
+.students-table td {
     text-align: center; /* Center align text */
     padding: 8px; /* Add padding for spacing */
     border: 1px solid #ddd; /* Add border for table cells */
@@ -79,7 +80,6 @@
     height: 140%;
     margin-left: 10px;
 }
-
 
 /* Đảm bảo danh sách ngành nằm ngay dưới ô input */
 .major-list {

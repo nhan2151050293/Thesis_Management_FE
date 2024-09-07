@@ -1,5 +1,5 @@
 .home-container {
-  padding-left: 5px;
+  padding-left: 2px;
   background-color: #dee1d7;
   background-size: cover;
 }
@@ -95,16 +95,6 @@
   margin-right: 10px;
 }
 
-.comments {
-  margin-top: 15px;
-}
-
-.comment-item {
-  border-top: 1px solid #ddd;
-  padding-top: 10px;
-  margin-top: 10px;
-}
-
 .actions {
   display: flex;
   justify-content: flex-start;
@@ -123,9 +113,9 @@
 .header-icons {
   position: absolute;
   bottom: 10px;
-  right: 10px;
   display: flex;
   gap: 10px;
+  right: 21%;
 }
 
 .icon-button {
@@ -153,20 +143,24 @@
 }
 
 .modal-content {
-  background: #fff;
+  background: #dee1d7;
   padding: 20px;
   border-radius: 8px;
-  max-width: 500px;
-  width: 100%;
   position: relative;
-}
-
-.post-content {
-  margin-bottom: 20px;
+  width: 600px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
 }
 
 .comments {
+  flex: 1;
   margin-bottom: 20px;
+  border: 1px solid #747958;
+  border-radius: 8px;
+  padding: 10px;
+  overflow-y: auto;
+  max-height: 300px; 
 }
 
 .comment-item {
@@ -175,12 +169,7 @@
 
 .comment-username {
   font-weight: bold;
-}
-
-.comment-textarea {
-  width: 100%;
-  height: 100px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .comment-button,
@@ -195,6 +184,67 @@
   margin-right: 10px;
 }
 
-.close-button {
-  background-color: #6c757d;
+
+.post-content-container {
+  flex: 1;
+  margin-bottom: 20px;
+  border: 1px solid #747958;
+  border-radius: 8px;
+  padding: 10px;
+  overflow-y: auto;
+  max-height: 150px; 
+}
+
+.comment-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.comment-textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px 50px 10px 10px; 
+  border: 1px solid #747958;
+  border-radius: 8px;
+  resize: none;
+  box-sizing: border-box;
+  background-color: #dee1d7;
+}
+
+.comment-send-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #747958;
+}
+
+.comment-send-icon:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.close-modal-icon{
+  background-color: #dee1d7;
+  position: absolute;
+  right: 4%;
+  border: none;
+  color: #747958;
+}
+
+.post-textarea {
+  width: 100%;
+  height: 500px;
+  padding: 10px 50px 10px 10px; 
+  border: 1px solid #747958;
+  border-radius: 8px;
+  resize: none;
+  box-sizing: border-box;
+  background-color: #dee1d7;
 }

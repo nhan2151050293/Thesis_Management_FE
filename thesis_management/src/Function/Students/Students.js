@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Alert, Modal, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { MyUserContext } from '../configs/Contexts';
-import { authApi, endpoints } from '../configs/APIs';
+import { MyUserContext } from '../../configs/Contexts';
+import { authApi, endpoints } from '../../configs/APIs';
 import moment from 'moment';
 import './StudentsStyle.css';
 
@@ -36,7 +36,7 @@ const Students = () => {
         address: '',
         major: 'Chọn chuyên ngành',
         gpa: '',
-        thesis: ''
+        thesis: '',
     });
     const [showMajorList, setShowMajorList] = useState(false);
     const [showGenderList, setShowGenderList] = useState(false);
@@ -44,7 +44,7 @@ const Students = () => {
     const loadStudents = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem('token');
             const api = authApi(token);
             const response = await api.get(endpoints['students']);
             setStudents(response.data.results);
@@ -60,7 +60,7 @@ const Students = () => {
     const loadMajors = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem('token');
             const api = authApi(token);
             const response = await api.get(endpoints['majors']);
             setMajors(response.data.results);
@@ -71,7 +71,6 @@ const Students = () => {
             setLoading(false);
         }
     };
-
 
     useEffect(() => {
         loadStudents();
@@ -86,7 +85,7 @@ const Students = () => {
     const confirmDeleteStudent = async () => {
         if (studentToDelete) {
             try {
-                const token = localStorage.getItem("token");
+                const token = localStorage.getItem('token');
                 const api = authApi(token);
                 await api.delete(endpoints['delete-student'](studentToDelete));
                 loadStudents();
@@ -120,7 +119,7 @@ const Students = () => {
             address: '',
             major: 'Chọn chuyên ngành',
             gpa: '',
-            thesis: ''
+            thesis: '',
         });
         setShowAddModal(true);
     };
@@ -129,14 +128,13 @@ const Students = () => {
         setShowUpdateModal(false);
         setShowAddModal(false);
         setSelectedStudent(null);
-        setShowMajorList(false);  // Close major list on modal close
+        setShowMajorList(false); // Close major list on modal close
         setShowGenderList(false); // Close gender list on modal close
     };
 
-
     const handleUpdateStudent = async () => {
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem('token');
             const api = authApi(token);
 
             const formData = new FormData();
@@ -150,15 +148,11 @@ const Students = () => {
                 formData.append('thesis', selectedStudent.thesis);
             }
 
-            await api.patch(
-                endpoints['update-student'](selectedStudent.user),
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    }
-                }
-            );
+            await api.patch(endpoints['update-student'](selectedStudent.user), formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
 
             loadStudents();
             alert('Cập nhật sinh viên thành công!');
@@ -176,11 +170,11 @@ const Students = () => {
         }
 
         console.log(newStudent);
-    
+
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem('token');
             const api = authApi(token);
-    
+
             // Step 1: Create User object
             const userFormData = new FormData();
             userFormData.append('username', newStudent.username);
@@ -189,33 +183,32 @@ const Students = () => {
             userFormData.append('gender', newStudent.gender);
             userFormData.append('role', 'student');
 
-    
             const userResponse = await api.post(endpoints['users'], userFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                }
+                },
             });
-    
+
             // Step 2: Create Student object with the User ID
             const userId = userResponse.data.id; // Assuming the response returns the created user ID
             console.log(userId);
             const studentFormData = new FormData();
             studentFormData.append('user', userId); // Link to the created user
             studentFormData.append('code', newStudent.code);
-            studentFormData.append('full_name', newStudent.full_name);  
+            studentFormData.append('full_name', newStudent.full_name);
             studentFormData.append('birthday', newStudent.birthday);
             studentFormData.append('address', newStudent.address);
             studentFormData.append('major', newStudent.major);
             studentFormData.append('gpa', newStudent.gpa);
 
             console.log(studentFormData);
-    
+
             await api.post(endpoints['students'], studentFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                }
+                },
             });
-    
+
             loadStudents();
             alert('Thêm sinh viên thành công!');
             handleCloseModal();
@@ -230,10 +223,10 @@ const Students = () => {
         setSearchQuery(query);
         const filtered = students.filter(
             (student) =>
-                student.full_name.toLowerCase().includes(query) || 
-                student.code.toLowerCase().includes(query) || 
+                student.full_name.toLowerCase().includes(query) ||
+                student.code.toLowerCase().includes(query) ||
                 student.address.toLowerCase().includes(query) ||
-                student.major.toLowerCase().includes(query)
+                student.major.toLowerCase().includes(query),
         );
         setFilteredStudents(filtered);
     };
@@ -249,16 +242,16 @@ const Students = () => {
         setShowMajorList(false);
     };
 
-        // Handle gender input click to toggle the list
-        const handleGenderInputClick = () => {
-            setShowGenderList(!showGenderList);
-        };
-    
-        // Select a gender from the list
-        const handleGenderSelect = (gender) => {
-            setNewStudent({ ...newStudent, gender });
-            setShowGenderList(false);
-        };
+    // Handle gender input click to toggle the list
+    const handleGenderInputClick = () => {
+        setShowGenderList(!showGenderList);
+    };
+
+    // Select a gender from the list
+    const handleGenderSelect = (gender) => {
+        setNewStudent({ ...newStudent, gender });
+        setShowGenderList(false);
+    };
 
     return (
         <div>
@@ -278,7 +271,9 @@ const Students = () => {
                         value={searchQuery}
                         onChange={handleSearchChange}
                     />
-                    <button type="button" className="btn btn-primary add-btn" onClick={handleShowAddModal}>Thêm sinh viên</button>
+                    <button type="button" className="btn btn-primary add-btn" onClick={handleShowAddModal}>
+                        Thêm sinh viên
+                    </button>
                 </div>
                 <table className="students-table">
                     <thead>
@@ -298,12 +293,28 @@ const Students = () => {
                             <tr key={index}>
                                 <td>{student.code}</td>
                                 <td>{student.full_name}</td>
-                                <td>{moment(student.birthday).format("DD/MM/YYYY")}</td>
+                                <td>{moment(student.birthday).format('DD/MM/YYYY')}</td>
                                 <td>{student.address}</td>
                                 <td>{student.major}</td>
                                 <td>{student.gpa}</td>
-                                <td><button type="button" className="btn btn-primary" onClick={() => handleShowUpdateModal(student)}>Cập nhật</button></td>
-                                <td><button type="button" className="btn btn-danger" onClick={() => handleDelete(student.user)}>Xóa</button></td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        onClick={() => handleShowUpdateModal(student)}
+                                    >
+                                        Cập nhật
+                                    </button>
+                                </td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        className="btn btn-danger"
+                                        onClick={() => handleDelete(student.user)}
+                                    >
+                                        Xóa
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -311,16 +322,18 @@ const Students = () => {
             </div>
 
             <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
-            <Modal.Header closeButton>
-                <Modal.Title>Xác nhận xóa</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                Bạn có chắc chắn muốn xóa sinh viên này không?
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>Hủy</Button>
-                <Button variant="danger" onClick={confirmDeleteStudent}>Xóa</Button>
-            </Modal.Footer>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận xóa</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Bạn có chắc chắn muốn xóa sinh viên này không?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+                        Hủy
+                    </Button>
+                    <Button variant="danger" onClick={confirmDeleteStudent}>
+                        Xóa
+                    </Button>
+                </Modal.Footer>
             </Modal>
 
             {/* Modal cập nhật sinh viên */}
@@ -373,8 +386,12 @@ const Students = () => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>Đóng</Button>
-                    <Button variant="primary" onClick={handleUpdateStudent}>Lưu thay đổi</Button>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Đóng
+                    </Button>
+                    <Button variant="primary" onClick={handleUpdateStudent}>
+                        Lưu thay đổi
+                    </Button>
                 </Modal.Footer>
             </Modal>
 
@@ -440,16 +457,10 @@ const Students = () => {
                             />
                             {showGenderList && (
                                 <div className="major-list">
-                                    <div
-                                        className="major-item"
-                                        onClick={() => handleGenderSelect('Nam')}
-                                    >
+                                    <div className="major-item" onClick={() => handleGenderSelect('Nam')}>
                                         Nam
                                     </div>
-                                    <div
-                                        className="major-item"
-                                        onClick={() => handleGenderSelect('Nữ')}
-                                    >
+                                    <div className="major-item" onClick={() => handleGenderSelect('Nữ')}>
                                         Nữ
                                     </div>
                                 </div>
@@ -469,7 +480,7 @@ const Students = () => {
                             <Form.Label>Họ và tên</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder='Nhập họ và tên'
+                                placeholder="Nhập họ và tên"
                                 value={newStudent.full_name}
                                 onChange={(e) => setNewStudent({ ...newStudent, full_name: e.target.value })}
                             />
@@ -486,7 +497,7 @@ const Students = () => {
                             <Form.Label>Quê quán</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder='Nhập quê quán'
+                                placeholder="Nhập quê quán"
                                 value={newStudent.address}
                                 onChange={(e) => setNewStudent({ ...newStudent, address: e.target.value })}
                             />
@@ -517,7 +528,7 @@ const Students = () => {
                             <Form.Label>GPA</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder='Nhập GPA'
+                                placeholder="Nhập GPA"
                                 value={newStudent.gpa}
                                 onChange={(e) => setNewStudent({ ...newStudent, gpa: e.target.value })}
                             />
@@ -525,8 +536,12 @@ const Students = () => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>Đóng</Button>
-                    <Button variant="primary" onClick={handleAddStudent}>Thêm sinh viên</Button>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Đóng
+                    </Button>
+                    <Button variant="primary" onClick={handleAddStudent}>
+                        Thêm sinh viên
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </div>
