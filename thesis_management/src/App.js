@@ -11,6 +11,7 @@ import Study from './Function/Study/Study';
 import Students from './Function/Students/Students';
 import Lecturer from './Function/Lecturer/Lecturer';
 import Theses from './Function/Theses/Theses';
+import Score from './Function/Score/Score';
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                     <Route path="/students" element={<Students />} />
                     <Route path="/lecturer" element={<Lecturer />} />
                     <Route path="/theses" element={<Theses />} />
+                    <Route path="/score" element={<Score />} />
                 </Route>
             </Routes>
         </Router>

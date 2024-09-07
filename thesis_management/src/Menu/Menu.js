@@ -36,14 +36,14 @@ const Menu = () => {
                 )}
                 {user.role === 'lecturer' && (
                     <div className="Menu-grid">
-                        <button className="Menu-button" onClick={() => handleNavigation('/grade-studies')}>
-                            Grade Studies
+                        <button className="Menu-button" onClick={() => handleNavigation('/score')}>
+                            Chấm điểm khóa luận
                         </button>
                         <button className="Menu-button" onClick={() => handleNavigation('/councils')}>
-                            Councils
+                            Hội đồng tham gia
                         </button>
-                        <button className="Menu-button" onClick={() => handleNavigation('/student-list')}>
-                            Student List
+                        <button className="Menu-button" onClick={() => handleNavigation('/ccc')}>
+                            Danh sách khóa luận hướng dẫn
                         </button>
                     </div>
                 )}
