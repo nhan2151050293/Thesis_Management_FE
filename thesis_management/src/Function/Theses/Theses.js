@@ -16,6 +16,8 @@ const Theses = () => {
     const [students, setStudents] = useState([]);
     const [lecturers, setLecturers] = useState([]);
 
+    const [selectedThesis, setSelectedThesis] = useState(null);
+
     const [newThesis, setNewThesis] = useState([]);
     const [filteredThese, setFilteredThese] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -30,8 +32,6 @@ const Theses = () => {
     const [showAddModal, setShowAddModal] = useState(false);
 
     const [selectedCouncil, setSelectedCouncil] = useState('');
-    const [selectedLecturer, setSelectedLecturer] = useState('');
-    const [selectedStudent, setSelectedStudent] = useState('');
     const [selectedMajor, setSelectedMajor] = useState('');
     const [selectedSchoolYear, setSelectedSchoolYear] = useState('');
 
@@ -60,6 +60,7 @@ const Theses = () => {
             const response = await APIs.get(endpoints['theses']);
             setThesisData(response.data.results);
             setFilteredThese(response.data.results);
+            console.log(response.data.results);
         } catch (error) {
             console.error(error);
             setError('Không thể tải danh sách sinh viên. Vui lòng thử lại sau.');
@@ -158,7 +159,8 @@ const Theses = () => {
             council: 'Chọn hội đồng',
             major: 'Chọn chuyên nghành',
             school_year: 'Chọn niên khóa',
-            student: 'Chọn sinh viên',
+            students: [], // Thay đổi từ 'student' thành mảng 'students'
+            lecturers: [], // Thay đổi từ 'lecturer' thành mảng 'lecturers'
         });
         setShowAddModal(true);
     };
@@ -190,16 +192,64 @@ const Theses = () => {
         setShowCouncilList(false);
     };
 
-    const handleLecturerSelect = (lecturer_user, lecturer_full_name) => {
-        setNewThesis({ ...newThesis, lecturer: lecturer_user });
-        setSelectedLecturer(lecturer_full_name);
-        setShowLecturerList(false);
+    // const handleLecturerSelect = (lecturer_user, lecturer_full_name) => {
+    //     setNewThesis({ ...newThesis, lecturer: lecturer_user });
+    //     setSelectedLecturer(lecturer_full_name);
+    //     setShowLecturerList(false);
+    // };
+
+    // const handleStudentSelect = (student_user, student_full_name) => {
+    //     setNewThesis({ ...newThesis, student: student_user });
+    //     setSelectedStudent(student_full_name);
+    //     setShowStudentList(false);
+    // };
+
+    const [selectedStudents, setSelectedStudents] = useState([]);
+    const [selectedLecturers, setSelectedLecturers] = useState([]);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleStudentSelect = (studentId, studentName) => {
+        setErrorMessage(''); // Xóa thông báo lỗi khi có sự lựa chọn mới
+        const updatedStudents = [...selectedStudents];
+        const studentIndex = updatedStudents.findIndex((student) => student.id === studentId);
+
+        if (studentIndex > -1) {
+            // Nếu sinh viên đã được chọn, loại bỏ khỏi danh sách
+            updatedStudents.splice(studentIndex, 1);
+        } else {
+            // Nếu sinh viên chưa được chọn
+            if (updatedStudents.length < 10) {
+                // Giới hạn số lượng sinh viên
+                updatedStudents.push({ id: studentId, name: studentName });
+            } else {
+                setErrorMessage('Bạn chỉ có thể chọn tối đa 10 sinh viên.');
+                return;
+            }
+        }
+        setSelectedStudents(updatedStudents);
+        setShowStudentList(false);
     };
 
-    const handleStudentSelect = (student_user, student_full_name) => {
-        setNewThesis({ ...newThesis, student: student_user });
-        setSelectedStudent(student_full_name);
-        setShowStudentList(false);
+    const handleLecturerSelect = (lecturerId, lecturerName) => {
+        setErrorMessage(''); // Xóa thông báo lỗi khi có sự lựa chọn mới
+        const updatedLecturers = [...selectedLecturers];
+        const lecturerIndex = updatedLecturers.findIndex((lecturer) => lecturer.id === lecturerId);
+
+        if (lecturerIndex > -1) {
+            // Nếu giảng viên đã được chọn, loại bỏ khỏi danh sách
+            updatedLecturers.splice(lecturerIndex, 1);
+        } else {
+            // Nếu giảng viên chưa được chọn
+            if (updatedLecturers.length < 2) {
+                // Giới hạn số lượng giảng viên
+                updatedLecturers.push({ id: lecturerId, name: lecturerName });
+            } else {
+                setErrorMessage('Bạn chỉ có thể chọn tối đa 2 giảng viên.');
+                return;
+            }
+        }
+        setSelectedLecturers(updatedLecturers);
+        setShowLecturerList(false);
     };
 
     const handleMajorSelect = (major_code, major_name) => {
@@ -217,17 +267,76 @@ const Theses = () => {
     const handleCloseModal = () => {
         setShowUpdateModal(false);
         setShowAddModal(false);
-        setSelectedStudent(null);
+        setSelectedStudents([]);
+        setSelectedLecturers([]);
         setShowCouncilList(false);
         setShowLecturerList(false);
         setShowMajorList(false);
         setShowSchoolYearList(false);
+        setSelectedCouncil('');
+        setSelectedMajor('');
+        setSelectedSchoolYear('');
+    };
+
+    const handleUpdateStudents = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const api = authApi(token);
+
+            // Lặp qua từng sinh viên đã chọn để cập nhật
+            for (const student of selectedStudents) {
+                const formData = new FormData();
+                formData.append('thesis', newThesis.code);
+
+                await api.patch(endpoints['update-student'](student.id), formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+            }
+
+            // Thông báo thành công
+            alert('Cập nhật sinh viên thành công.');
+        } catch (error) {
+            console.error(error);
+            alert('Cập nhật sinh viên thất bại. Vui lòng thử lại.');
+        }
+    };
+
+    const handleAddLecturers = async (thesis_code) => {
+        try {
+            console.log(selectedLecturers, thesis_code);
+
+            // Xử lý endpoint để thêm giảng viên
+            const url = `${endpoints['theses']}/${thesis_code}/add_lecturer/`;
+
+            for (const lecturer of selectedLecturers) {
+                const formData = new FormData();
+                formData.append('lecturer_code', lecturer.id);
+                await APIs.post(url, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'X-CSRFToken': 'your-csrf-token',
+                    },
+                });
+            }
+
+            // Thông báo thành công
+            alert('Thêm thành công giảng viên hướng dẫn.');
+        } catch (error) {
+            console.error(error);
+            alert('Lỗi thêm giảng viên hướng dẫn. Vui lòng thử lại.');
+        }
     };
 
     const handleAddThesis = async () => {
         console.log(newThesis);
         setLoading(true);
         try {
+            if (selectedLecturers.length > 2) {
+                Alert.alert('Thông báo', 'Chỉ được chọn tối đa 2 giảng viên hướng dẫn.');
+                return;
+            }
             // Make sure all required fields are filled
             if (
                 !newThesis.code ||
@@ -237,7 +346,8 @@ const Theses = () => {
                 !newThesis.council ||
                 !newThesis.major ||
                 !newThesis.school_year ||
-                !newThesis.student
+                selectedLecturers.length === 0 ||
+                selectedStudents.length === 0
             ) {
                 setError('Vui lòng điền đầy đủ thông tin.');
                 return;
@@ -247,12 +357,17 @@ const Theses = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
+
+            handleAddLecturers(res.data.code);
+            handleUpdateStudents();
+
+            loadThese();
             setThesisData([...thesisData, res.data]);
             setFilteredThese([...filteredThese, res.data]);
             setShowAddModal(false);
             setSelectedCouncil('');
-            setSelectedLecturer('');
-            setSelectedStudent('');
+            setSelectedLecturers([]);
+            setSelectedStudents([]);
             setSelectedMajor('');
             setSelectedSchoolYear('');
             alert('Thêm khóa luận thành công!');
@@ -286,91 +401,284 @@ const Theses = () => {
         }
     };
 
+    const handleShowUpdateModal = (thesis) => {
+        setSelectedThesis(thesis);
+        setShowUpdateModal(true);
+    };
+
+    const handleUpdateThesis = async () => {
+        try {
+            console.log(selectedThesis, newThesis.council, newThesis.major, newThesis.school_year);
+
+            const formData = new FormData();
+            formData.append('name', selectedThesis.name);
+            formData.append('start_date', selectedThesis.start_date);
+            formData.append('end_date', selectedThesis.end_date);
+            formData.append('reportFile', selectedThesis.report_file);
+            formData.append('council', newThesis.council);
+            formData.append('major', newThesis.major);
+            formData.append('school_year', newThesis.school_year);
+
+            await APIs.patch(endpoints['update-thesis'](selectedThesis.code), formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            handleCloseModal();
+            loadThese();
+            alert('Cập nhật khóa luận thành công!');
+            handleCloseModal();
+        } catch (error) {
+            console.error(error);
+            alert('Cập nhật khóa luận thất bại. Vui lòng thử lại.');
+        }
+    };
+
     return (
         <div>
-            <div className="student-header">
-                <h1 className="student-title">Quản lý khóa luận</h1>
-            </div>
-
-            {loading && <p>Đang tải...</p>}
-            {error && <Alert variant="danger">{error}</Alert>}
-
-            <div className="students-container">
-                <div className="search-container">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Tìm kiếm khóa luận..."
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                    />
-                    <button type="button" className="btn btn-primary add-btn" onClick={handleShowAddModal}>
-                        Thêm khóa luận
-                    </button>
+            <div>
+                <div className="student-header">
+                    <h1 className="student-title">Quản lý khóa luận</h1>
                 </div>
-                <table className="students-table">
-                    <thead>
-                        <tr>
-                            <th>Mã khóa luận</th>
-                            <th>Tên khóa luận</th>
-                            <th>Ngày bắt đầu</th>
-                            <th>Ngày kết thúc</th>
-                            <th>File báo cáo</th>
-                            <th>Tổng điểm</th>
-                            <th>Kết quả</th>
-                            <th>Hội đồng</th>
-                            <th>Giảng viên hướng dẫn</th>
-                            <th>Chuyên nghành</th>
-                            <th>Niên khóa</th>
-                            <th>Cập nhật</th>
-                            <th>Xóa</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredThese.map((thesis, index) => (
-                            <tr key={index}>
-                                <td>{thesis.code}</td>
-                                <td>{thesis.name}</td>
-                                <td>{moment(thesis.start_date).format('DD/MM/YYYY')}</td>
-                                <td>{moment(thesis.end_date).format('DD/MM/YYYY')}</td>
-                                <td>
-                                    {thesis.report_file ? (
-                                        <a href={thesis.report_file} target="_blank" rel="noopener noreferrer">
-                                            {thesis.report_file}
-                                        </a>
-                                    ) : (
-                                        'Chưa có'
-                                    )}
-                                </td>
-                                <td>{thesis.total_score}</td>
-                                <td>{thesis.result === false ? 'Chưa đạt' : 'Đạt'}</td>
-                                <td>{thesis.council}</td>
-                                <td>
-                                    {thesis.lecturers.length > 0
-                                        ? thesis.lecturers.map((lecturer, i) => <div key={i}>{lecturer.full_name}</div>)
-                                        : 'Chưa có giảng viên'}
-                                </td>
-                                <td>{thesis.major}</td>
-                                <td>{thesis.school_year}</td>
-                                <td>
-                                    <button type="button" className="btn btn-primary" onClick={() => {}}>
-                                        Cập nhật
-                                    </button>
-                                </td>
-                                <td>
-                                    <button
-                                        type="button"
-                                        className="btn btn-danger"
-                                        onClick={() => handleDelete(thesis.code)}
-                                    >
-                                        Xóa
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+
+                {loading && <p>Đang tải...</p>}
+                {error && <Alert variant="danger">{error}</Alert>}
+
+                <div className="students-container">
+                    <div className="search-container">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Tìm kiếm khóa luận..."
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                        />
+                        <button type="button" className="btn btn-primary add-btn" onClick={handleShowAddModal}>
+                            Thêm khóa luận
+                        </button>
+                    </div>
+
+                    {/* Bọc bảng trong div có lớp cho phép cuộn ngang */}
+                    <div className="table-responsive">
+                        <table className="students-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã khóa luận</th>
+                                    <th>Tên khóa luận</th>
+                                    <th>Ngày bắt đầu</th>
+                                    <th>Ngày kết thúc</th>
+                                    <th>File báo cáo</th>
+                                    <th>Tổng điểm</th>
+                                    <th>Kết quả</th>
+                                    <th>Hội đồng</th>
+                                    <th>Giảng viên hướng dẫn</th>
+                                    <th>Sinh viên thực hiện</th>
+                                    <th>Chuyên nghành</th>
+                                    <th>Niên khóa</th>
+                                    <th>Cập nhật</th>
+                                    <th>Xóa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredThese && filteredThese.length > 0 ? (
+                                    filteredThese.map((thesis, index) => (
+                                        <tr key={index}>
+                                            <td>{thesis.code}</td>
+                                            <td>{thesis.name}</td>
+                                            <td>{moment(thesis.start_date).format('DD/MM/YYYY')}</td>
+                                            <td>{moment(thesis.end_date).format('DD/MM/YYYY')}</td>
+                                            <td>
+                                                {thesis.report_file ? (
+                                                    <a
+                                                        href={thesis.report_file}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        {thesis.report_file}
+                                                    </a>
+                                                ) : (
+                                                    'Chưa có'
+                                                )}
+                                            </td>
+                                            <td>{thesis.total_score}</td>
+                                            <td>{thesis.result === false ? 'Chưa đạt' : 'Đạt'}</td>
+                                            <td>{thesis.council}</td>
+                                            <td>
+                                                {thesis.lecturers && thesis.lecturers.length > 0
+                                                    ? thesis.lecturers.map((lecturer, i) => (
+                                                          <div key={i}>{lecturer.full_name}</div>
+                                                      ))
+                                                    : 'Chưa có giảng viên'}
+                                            </td>
+                                            <td>
+                                                {thesis.students && thesis.students.length > 0
+                                                    ? thesis.students.map((student, i) => (
+                                                          <div key={i}>{student.full_name}</div>
+                                                      ))
+                                                    : 'Chưa có sinh viên'}
+                                            </td>
+                                            <td>{thesis.major}</td>
+                                            <td>{thesis.school_year}</td>
+                                            <td>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-primary"
+                                                    onClick={() => handleShowUpdateModal(thesis)}
+                                                >
+                                                    Cập nhật
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-danger"
+                                                    onClick={() => handleDelete(thesis.code)}
+                                                >
+                                                    Xóa
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="14">Không có khóa luận nào</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
+
+            {/* Modal cập nhật khóa luận */}
+            <Modal show={showUpdateModal} onHide={handleCloseModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Cập nhật khóa luận</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="formName">
+                            <Form.Label>Tên khóa luận</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={selectedThesis?.name || ''}
+                                onChange={(e) => setSelectedThesis({ ...selectedThesis, name: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formStartDate">
+                            <Form.Label>Ngày bắt đầu</Form.Label>
+                            <Form.Control
+                                type="date"
+                                value={selectedThesis?.start_date || ''}
+                                onChange={(e) => setSelectedThesis({ ...selectedThesis, start_date: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formEndDate">
+                            <Form.Label>Ngày kết thúc</Form.Label>
+                            <Form.Control
+                                type="date"
+                                value={selectedThesis?.end_date || ''}
+                                onChange={(e) => setSelectedThesis({ ...selectedThesis, end_date: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formReportFile">
+                            <Form.Label>File báo cáo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={selectedThesis?.report_file || 'Thêm file báo cáo...'}
+                                onChange={(e) => setSelectedThesis({ ...selectedThesis, report_file: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formCouncil">
+                            <Form.Label>Hội đồng</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Chọn hội đồng"
+                                value={selectedThesis?.council}
+                                onClick={handleCouncilInputClick}
+                                readOnly
+                            />
+                            {showCouncilList && (
+                                <div className="major-list">
+                                    {councils.map((council) => (
+                                        <div
+                                            key={council.id}
+                                            className="major-item"
+                                            onClick={() => {
+                                                handleCouncilSelect(council.id, council.name);
+                                                setSelectedThesis({ ...selectedThesis, major: council.name });
+                                            }}
+                                        >
+                                            {council.name}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </Form.Group>
+                        {errorMessage && <div className="error-message">{errorMessage}</div>}
+                        <Form.Group controlId="formMajor">
+                            <Form.Label>Chuyên Ngành</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Chọn chuyên nghành"
+                                value={selectedThesis?.major}
+                                onClick={handleMajorInputClick}
+                                readOnly
+                            />
+                            {showMajorList && (
+                                <div className="major-list">
+                                    {majors.map((major) => (
+                                        <div
+                                            key={major.code}
+                                            className="major-item"
+                                            onClick={() => {
+                                                handleMajorSelect(major.code, major.name);
+                                                setSelectedThesis({ ...selectedThesis, major: major.name });
+                                            }}
+                                        >
+                                            {major.name}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </Form.Group>
+                        <Form.Group controlId="formSchoolYear">
+                            <Form.Label>Niên khóa</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Chọn niên khóa"
+                                value={selectedThesis?.school_year}
+                                onClick={handleSchoolYearInputClick}
+                                readOnly
+                            />
+                            {showSchoolYearList && (
+                                <div className="major-list">
+                                    {schoolYears.map((school_year) => (
+                                        <div
+                                            key={school_year.id}
+                                            className="major-item"
+                                            onClick={() => {
+                                                handleSchoolYearSelect(school_year.id, school_year.name);
+                                                setSelectedThesis({ ...selectedThesis, school_year: school_year.name });
+                                            }}
+                                        >
+                                            {school_year.name}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Đóng
+                    </Button>
+                    <Button variant="primary" onClick={handleUpdateThesis}>
+                        Lưu thay đổi
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
             <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
                 <Modal.Header closeButton>
@@ -456,7 +764,7 @@ const Theses = () => {
                             <Form.Control
                                 type="text"
                                 placeholder="Chọn giảng viên hướng dẫn"
-                                value={selectedLecturer}
+                                value={selectedLecturers.map((lecturer) => lecturer.name).join(', ')}
                                 onClick={handleLecturerInputClick}
                                 readOnly
                             />
@@ -465,7 +773,9 @@ const Theses = () => {
                                     {lecturers.map((lecturer) => (
                                         <div
                                             key={lecturer.user}
-                                            className="major-item"
+                                            className={`major-item ${
+                                                selectedLecturers.find((l) => l.id === lecturer.user) ? 'selected' : ''
+                                            }`}
                                             onClick={() => handleLecturerSelect(lecturer.user, lecturer.full_name)}
                                         >
                                             {lecturer.full_name}
@@ -474,12 +784,13 @@ const Theses = () => {
                                 </div>
                             )}
                         </Form.Group>
-                        <Form.Group controlId="formLecturer">
+
+                        <Form.Group controlId="formStudent">
                             <Form.Label>Sinh viên thực hiện</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Chọn sinh viên thực hiện"
-                                value={selectedStudent}
+                                value={selectedStudents.map((student) => student.name).join(', ')}
                                 onClick={handleStudentInputClick}
                                 readOnly
                             />
@@ -488,7 +799,9 @@ const Theses = () => {
                                     {students.map((student) => (
                                         <div
                                             key={student.user}
-                                            className="major-item"
+                                            className={`major-item ${
+                                                selectedStudents.find((s) => s.id === student.user) ? 'selected' : ''
+                                            }`}
                                             onClick={() => handleStudentSelect(student.user, student.full_name)}
                                         >
                                             {student.full_name}
@@ -497,6 +810,8 @@ const Theses = () => {
                                 </div>
                             )}
                         </Form.Group>
+
+                        {errorMessage && <div className="error-message">{errorMessage}</div>}
                         <Form.Group controlId="formMajor">
                             <Form.Label>Chuyên Ngành</Form.Label>
                             <Form.Control

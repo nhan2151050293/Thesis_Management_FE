@@ -13,6 +13,7 @@ export const endpoints = {
     'council-members': (council_Id) => `/councils/${council_Id}/members/`,
     'council-theses': (council_Id) => `/councils/${council_Id}/theses/`,
     theses: '/theses/',
+    'update-thesis': (thesis_code) => `/theses/${thesis_code}/`,
     'delete-thesis': (thesis_code) => `/theses/${thesis_code}/`,
     lecturers: '/lecturers/',
     'delete-lecturer': (lecturer_id) => `/lecturers/${lecturer_id}/`,

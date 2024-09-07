@@ -20,7 +20,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
     /* Tùy chỉnh kiểu chữ và căn chỉnh */
     min-width: 300px; /* Đảm bảo mỗi item có chiều rộng tối thiểu */
-    
 }
 
 /* Tiêu đề của trang */
@@ -40,14 +39,14 @@
     color: #dee1d7;
 }
 
-
 .students-table {
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
 }
 
-.students-table th, .students-table td {
+.students-table th,
+.students-table td {
     text-align: center; /* Center align text */
     padding: 8px; /* Add padding for spacing */
     border: 1px solid #ddd; /* Add border for table cells */
@@ -80,7 +79,6 @@
     margin-left: 10px;
 }
 
-
 /* Đảm bảo danh sách ngành nằm ngay dưới ô input */
 .major-list {
     background-color: #fff;
@@ -101,4 +99,34 @@
 
 .major-item:hover {
     background-color: #f8f9fa;
+}
+
+.major-item.selected {
+    background-color: #d3d3d3; /* Ví dụ màu nền cho đối tượng đã chọn */
+}
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+.table-responsive {
+    overflow-x: auto; /* Cho phép cuộn ngang */
+    -webkit-overflow-scrolling: touch; /* Cải thiện cuộn trên thiết bị cảm ứng */
+}
+
+.students-table {
+    width: 100%; /* Đảm bảo bảng chiếm toàn bộ chiều rộng của container */
+    border-collapse: collapse; /* Loại bỏ khoảng cách giữa các ô bảng */
+}
+
+.students-table th,
+.students-table td {
+    white-space: nowrap; /* Không xuống dòng nội dung */
+    text-align: center; /* Căn giữa ngang cho văn bản trong các ô */
+    vertical-align: middle; /* Căn giữa dọc cho văn bản trong các ô */
+    padding: 8px; /* Khoảng cách bên trong các ô */
+}
+
+.students-table th {
+    background-color: #f8f9fa; /* Màu nền cho tiêu đề bảng */
 }
