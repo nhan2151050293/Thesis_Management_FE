@@ -44,20 +44,21 @@ const Login = () => {
                 throw new Error('Vui lòng nhập đầy đủ thông tin đăng nhập');
             }
 
-            // const response = await APIs.post(endpoints['login'], {
-            //     ...user,
-            //     client_id: 'dgUWVUFcjUa5a96UG1EThst7K2akAWfMDcZKjSOt',
-            //     client_secret: 'YhpIccJIWQUVwDqAAoAWbKOOlCwieC1ZURuov8i7HB0bKos6KMLt9ku5ZquXZhiOxJ1LM4gQSJRxwBcSjnyRY7mpiOxXX9b3JOr0TMeigyXD7ZpEz82o5z96qWWH5TH3',
-            //     grant_type: 'password',
-            // });
-
             const response = await APIs.post(endpoints['login'], {
                 ...user,
-                client_id: 'raLOPdSRcjjZZ6GayaO0Z5mKLWdc3qzDiV2OrKNM',
+                client_id: 'dgUWVUFcjUa5a96UG1EThst7K2akAWfMDcZKjSOt',
                 client_secret:
-                    '3tLQNOpzys13Fk0li8ZqHnygjluhvAxc5tptVfAPfTem41H02CppNS2dqSp52ngMeqHgmCXSzePadGsqvZbfW5MlvPlW3Fnc4z1p9OIZF6MPFje7HCYU81AwjUOJn2MO',
+                    'YhpIccJIWQUVwDqAAoAWbKOOlCwieC1ZURuov8i7HB0bKos6KMLt9ku5ZquXZhiOxJ1LM4gQSJRxwBcSjnyRY7mpiOxXX9b3JOr0TMeigyXD7ZpEz82o5z96qWWH5TH3',
                 grant_type: 'password',
             });
+
+            //const response = await APIs.post(endpoints['login'], {
+            //    ...user,
+            //    client_id: 'raLOPdSRcjjZZ6GayaO0Z5mKLWdc3qzDiV2OrKNM',
+            //    client_secret:
+            //        '3tLQNOpzys13Fk0li8ZqHnygjluhvAxc5tptVfAPfTem41H02CppNS2dqSp52ngMeqHgmCXSzePadGsqvZbfW5MlvPlW3Fnc4z1p9OIZF6MPFje7HCYU81AwjUOJn2MO',
+            //    grant_type: 'password',
+            //});
 
             // Save token and password to localStorage
             localStorage.setItem('token', response.data.access_token);
