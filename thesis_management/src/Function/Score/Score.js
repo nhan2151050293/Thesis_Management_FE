@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { MyUserContext } from '../../configs/Contexts';
-import { Button, Modal, Form, Spinner, Card, ListGroup, Alert } from 'react-bootstrap';
+import { Button, Modal, Form, Spinner, Card, ListGroup } from 'react-bootstrap';
 import './Score.css';
 import { authApi, endpoints } from '../../configs/APIs';
 
@@ -22,19 +22,17 @@ const Score = () => {
     const [editScores, setEditScores] = useState({});
     const [modalVisible2, setModalVisible2] = useState(false);
 
-    console.log('user: ' + user.id);
-
     useEffect(() => {
         const fetchToken = async () => {
             try {
-                const storedToken = await localStorage.getItem('token');
+                const storedToken = localStorage.getItem('token');
                 if (!storedToken) {
-                    Alert.alert('Lỗi', 'Vui lòng đăng nhập');
+                    alert('Vui lòng đăng nhập');
                     return;
                 }
                 setToken(storedToken);
             } catch (error) {
-                Alert.alert('Lỗi', 'Không thể lấy tài nguyên');
+                alert('Không thể lấy tài nguyên 1');
             }
         };
 
@@ -60,7 +58,7 @@ const Score = () => {
 
                 setTheses(allTheses);
             } catch (error) {
-                Alert.alert('Lỗi', 'Không thể tải tài nguyêhn');
+                alert('Không thể tải tài nguyêhn');
             } finally {
                 setLoading(false);
             }
@@ -78,7 +76,7 @@ const Score = () => {
 
         try {
             if (!token) {
-                Alert.alert('Lỗi', 'Vui lòng đăng nhập');
+                alert('Vui lòng đăng nhập');
                 return;
             }
             const criteriaResponse = await authApi(token).get(endpoints['theses-criteria'](item.code));
@@ -86,7 +84,7 @@ const Score = () => {
             setCriteria(fetchedCriteria);
             setModalVisible(true);
         } catch (error) {
-            Alert.alert('Lỗi', 'Không thể tải tài nguyên');
+            alert('Không thể tải tài nguyên');
         }
     };
 
@@ -128,6 +126,8 @@ const Score = () => {
                             Authorization: `Bearer ${token}`,
                         },
                     });
+
+                    console.log('Form Data Array:', formData);
                 } catch (error) {
                     const errorMessage = JSON.stringify(error.response.data).replace(/[{}"]/g, '');
                     if (!errorMessagesSet.has(errorMessage)) {
@@ -137,7 +137,7 @@ const Score = () => {
                 }
             }
             if (errorMessagesSet.size > 0) {
-                Alert.alert('Lỗi', Array.from(errorMessagesSet)[0]);
+                alert(Array.from(errorMessagesSet)[0]);
             }
             return allSuccess;
         } catch (error) {
@@ -158,24 +158,27 @@ const Score = () => {
             }));
 
             const allScoresValid = formDataArray.every((formData) => isScoreValid(formData.score_number));
+            console.log(formDataArray.data);
 
             if (allScoresValid && token) {
                 const success = await addScore(selectedThesis.id, formDataArray, token);
                 if (success) {
-                    Alert.alert('Thông báo', 'Tất cả điểm được thêm thành công');
+                    // console.log('Tất cả điểm được thêm thành công');
                     setModalVisible(false);
                 }
             } else {
-                Alert.alert('Lỗi', 'Vui lòng nhập điểm từ 0 đến 10.');
+                console.error('Vui lòng nhập điểm từ 0 đến 10.');
             }
-        } catch (error) {}
+        } catch (error) {
+            console.error('Lỗi khi gửi điểm:', error);
+        }
     };
 
     const handleEditDetails = async (item) => {
         setSelectedThesis(item);
         try {
             if (!token) {
-                Alert.alert('Lỗi', 'Vui lòng đăng nhập');
+                alert('Vui lòng đăng nhập');
                 return;
             }
             const criteriaResponse = await authApi(token).get(endpoints['these_lecturer-scores'](item.code));
@@ -183,7 +186,7 @@ const Score = () => {
             setEditCriteria(fetchedCriteria);
             setEditModalVisible(true);
         } catch (error) {
-            Alert.alert('Lỗi', 'Không thể tải tài nguyên');
+            alert('Không thể tải tài nguyên');
         }
     };
 
@@ -225,7 +228,7 @@ const Score = () => {
             }
 
             if (errorMessagesSet.size > 0) {
-                Alert.alert('Lỗi', Array.from(errorMessagesSet)[0]);
+                alert(Array.from(errorMessagesSet)[0]);
             }
 
             return allSuccess;
@@ -244,19 +247,19 @@ const Score = () => {
                 }));
 
             if (formDataArray.length === 0) {
-                Alert.alert('Thông báo', 'Không có điểm nào được thay đổi.');
+                alert('Không có điểm nào được thay đổi.');
                 return;
             }
 
             if (token) {
                 const success = await editScore(formDataArray, token);
                 if (success) {
-                    Alert.alert('Thông báo', 'Điểm sửa thành công.');
+                    alert('Điểm sửa thành công.');
                     setEditModalVisible(false);
                 }
             }
         } catch (error) {
-            Alert.alert('Lỗi', 'Vui lòng thử lại');
+            alert('Vui lòng thử lại');
         }
     };
 
@@ -311,26 +314,28 @@ const Score = () => {
                 <Modal.Header closeButton>
                     <Modal.Title>Chấm điểm</Modal.Title>
                 </Modal.Header>
-                <Modal.Body></Modal.Body>
-                <div className="modalContent">
-                    <h2 className="modalTitle">Tiêu chí của khóa luận</h2>
-                    <div className="criteriaList">
-                        {criteria.map((item) => (
-                            <div key={item.id} className="criteriaItem">
-                                <p className="modalItemText">{item.criteria.name}</p>
-                                <p className="modalItemText2">{item.criteria.evaluation_method}</p>
-                                <input
-                                    type="number"
-                                    min="1"
-                                    max="10"
-                                    placeholder="Nhập điểm 1-10"
-                                    className="inputScore"
-                                    onChange={(e) => handleScoreChange(item.id, e.target.value)}
-                                />
-                            </div>
-                        ))}
+                <Modal.Body>
+                    <div className="modalContent">
+                        <h2 className="modalTitle">Tiêu chí của khóa luận</h2>
+                        <div className="criteriaList">
+                            {criteria.map((item) => (
+                                <div key={item.id} className="criteriaItem">
+                                    <p className="modalItemText">{item.criteria.name}</p>
+                                    <p className="modalItemText2">{item.criteria.evaluation_method}</p>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        max="10"
+                                        placeholder="Nhập điểm 1-10"
+                                        className="inputScore"
+                                        onChange={(e) => handleScoreChange(item.id, e.target.value)}
+                                    />
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                </Modal.Body>
+
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setModalVisible(false)}>
                         Đóng
@@ -385,15 +390,15 @@ const Score = () => {
                                 <div className="modalItem">
                                     <p className="modalItemText">Mã: {selectedThesis.code}</p>
                                     <p className="modalItemText">{selectedThesis.name}</p>
-                                    <p className="modalItemText">Ngày bắt đầu: {selectedThesis.start_date}</p>
-                                    <p className="modalItemText">Ngày kết thúc: {selectedThesis.end_date}</p>
+                                    <p className="modalItemText">Ngày bắt đầu: {formattedStartDate}</p>
+                                    <p className="modalItemText">Ngày kết thúc: {formattedEndDate}</p>
                                     <p className="modalItemText">Tổng điểm: {selectedThesis.total_score}</p>
                                     <p className="modalItemText">
                                         Kết quả: {selectedThesis.result ? 'Đạt' : 'Chưa đạt'}
                                     </p>
                                     <p className="modalItemText">Khoa: {selectedThesis.major}</p>
                                     <p className="modalItemText">Năm học: {selectedThesis.school_year}</p>
-                                    <p className="modalItemText">Link báo cáo:</p>
+                                    <p className="modalItemText">Link báo cáo: </p>
                                     <a
                                         href="#"
                                         // onClick={() => handleOpenLink(selectedThesis.reportFile)}
@@ -401,7 +406,7 @@ const Score = () => {
                                     >
                                         {selectedThesis.reportFile}
                                     </a>
-                                    <p className="modalItemText">Giáo viên hướng dẫn:</p>
+                                    <p className="modalItemText bold-text">Giáo viên hướng dẫn:</p>
                                     {selectedThesis.lecturers &&
                                         selectedThesis.lecturers.map((lecturer) => (
                                             <div key={lecturer.code} className="modalItem">
@@ -410,7 +415,7 @@ const Score = () => {
                                                 <p className="modalItemText">Khoa: {lecturer.faculty}</p>
                                             </div>
                                         ))}
-                                    <p className="modalItemText">Sinh viên thực hiện:</p>
+                                    <p className="modalItemText bold-text">Sinh viên thực hiện:</p>
                                     {selectedThesis.students &&
                                         selectedThesis.students.map((student) => (
                                             <div key={student.code} className="modalItem">
@@ -421,7 +426,7 @@ const Score = () => {
                                         ))}
                                     {selectedThesis.reviewer && (
                                         <>
-                                            <p className="modalItemText">Giáo viên Phản biện:</p>
+                                            <p className="modalItemText bold-text">Giáo viên Phản biện:</p>
                                             <div className="modalItem">
                                                 <p className="modalItemText">Mã GV: {selectedThesis.reviewer.code}</p>
                                                 <p className="modalItemText">

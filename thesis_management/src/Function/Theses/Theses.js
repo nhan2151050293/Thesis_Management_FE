@@ -434,6 +434,22 @@ const Theses = () => {
         }
     };
 
+    const handleExportPDF = async (item) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await authApi(token).get(endpoints['these_generate-pdf'](item.code));
+            const { file_url } = response.data;
+
+            if (file_url) {
+                window.open(file_url, '_blank');
+            } else {
+                alert('Không tìm thấy đường dẫn file PDF');
+            }
+        } catch (error) {
+            alert('Đã xảy ra lỗi khi xuất file PDF');
+        }
+    };
+
     return (
         <div>
             <div>
@@ -475,6 +491,7 @@ const Theses = () => {
                                     <th>Sinh viên thực hiện</th>
                                     <th>Chuyên nghành</th>
                                     <th>Niên khóa</th>
+                                    <th>Xuất bảng điểm</th>
                                     <th>Cập nhật</th>
                                     <th>Xóa</th>
                                 </tr>
@@ -526,6 +543,15 @@ const Theses = () => {
                                                     onClick={() => handleShowUpdateModal(thesis)}
                                                 >
                                                     Cập nhật
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-primary"
+                                                    onClick={() => handleExportPDF(thesis)}
+                                                >
+                                                    Xuất bảng điểm
                                                 </button>
                                             </td>
                                             <td>

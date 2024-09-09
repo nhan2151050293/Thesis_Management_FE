@@ -44,8 +44,16 @@
     border-width: 0.4em;
 }
 
-.modalBody {
+.modal-body {
     padding: 15px;
-    flex: 1; /* Cho phép phần nội dung chiếm toàn bộ không gian còn lại */
-    overflow-y: auto; /* Cho phép cuộn dọc khi nội dung vượt quá kích thước của modal */
+    flex: 1;
+    overflow-y: auto;
+}
+
+button {
+    margin: 10px;
+}
+
+.bold-text {
+    font-weight: bold;
 }
