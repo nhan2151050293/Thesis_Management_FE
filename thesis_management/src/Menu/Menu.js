@@ -32,6 +32,9 @@ const Menu = () => {
                         <button className="Menu-button" onClick={() => handleNavigation('/theses')}>
                             Quản lí khóa luận
                         </button>
+                        <button className="Menu-button" onClick={() => handleNavigation('/statistical')}>
+                            Thống kê
+                        </button>
                     </div>
                 )}
                 {user.role === 'lecturer' && (

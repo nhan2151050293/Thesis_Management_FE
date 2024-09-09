@@ -13,6 +13,7 @@ import Lecturer from './Function/Lecturer/Lecturer';
 import Theses from './Function/Theses/Theses';
 import Score from './Function/Score/Score';
 import Chat from './Chat/Chat';
+import Statistical from './Function/Statistical/Statistical';
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
                     <Route path="/theses" element={<Theses />} />
                     <Route path="/score" element={<Score />} />
                     <Route path="/chat/:thesesCode" element={<Chat />} />
+                    <Route path="/statistical" element={<Statistical />} />
                 </Route>
             </Routes>
         </Router>
