@@ -15,6 +15,7 @@ const Students = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(null);
     const [error, setError] = useState(null);
+    const [selectedMajor, setSelectedMajor] = useState('');
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [studentToDelete, setStudentToDelete] = useState(null);
@@ -76,6 +77,7 @@ const Students = () => {
         loadStudents();
         loadMajors();
     }, []);
+
 
     const handleDelete = (studentId) => {
         setStudentToDelete(studentId);
@@ -237,8 +239,9 @@ const Students = () => {
     };
 
     // Select a major from the list
-    const handleMajorSelect = (major) => {
-        setNewStudent({ ...newStudent, major });
+    const handleMajorSelect = (major_code, major_name) => {
+        setNewStudent({ ...newStudent, major: major_code });
+        setSelectedMajor(major_name);
         setShowMajorList(false);
     };
 
@@ -252,6 +255,7 @@ const Students = () => {
         setNewStudent({ ...newStudent, gender });
         setShowGenderList(false);
     };
+    
 
     return (
         <div>
@@ -503,20 +507,21 @@ const Students = () => {
                             />
                         </Form.Group>
                         <Form.Group controlId="formMajor">
-                            <Form.Label>Ngành</Form.Label>
+                            <Form.Label>Chuyên ngành</Form.Label>
                             <Form.Control
                                 type="text"
-                                value={newStudent.major}
+                                placeholder="Chọn chuyên nghành"
+                                value={selectedMajor}
                                 onClick={handleMajorInputClick}
                                 readOnly
                             />
                             {showMajorList && (
                                 <div className="major-list">
-                                    {majors.map((major, index) => (
+                                    {majors.map((major) => (
                                         <div
-                                            key={index}
+                                            key={major.code}
                                             className="major-item"
-                                            onClick={() => handleMajorSelect(major.code)}
+                                            onClick={() => handleMajorSelect(major.code, major.name)}
                                         >
                                             {major.name}
                                         </div>
