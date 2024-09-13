@@ -453,14 +453,14 @@ const Theses = () => {
     return (
         <div>
             <div>
-                <div className="student-header">
-                    <h1 className="student-title">Quản lý khóa luận</h1>
+                <div className="thesis-header">
+                    <h1 className="thesis-title">Quản lý khóa luận</h1>
                 </div>
 
                 {loading && <p>Đang tải...</p>}
                 {error && <Alert variant="danger">{error}</Alert>}
 
-                <div className="students-container">
+                <div className="theses-container">
                     <div className="search-container">
                         <input
                             type="text"
@@ -476,7 +476,7 @@ const Theses = () => {
 
                     {/* Bọc bảng trong div có lớp cho phép cuộn ngang */}
                     <div className="table-responsive">
-                        <table className="students-table">
+                        <table className="theses-table">
                             <thead>
                                 <tr>
                                     <th>Mã khóa luận</th>
@@ -625,11 +625,11 @@ const Theses = () => {
                                 readOnly
                             />
                             {showCouncilList && (
-                                <div className="major-list">
+                                <div className="option-list">
                                     {councils.map((council) => (
                                         <div
                                             key={council.id}
-                                            className="major-item"
+                                            className="option-item"
                                             onClick={() => {
                                                 handleCouncilSelect(council.id, council.name);
                                                 setSelectedThesis({ ...selectedThesis, major: council.name });
@@ -652,11 +652,11 @@ const Theses = () => {
                                 readOnly
                             />
                             {showMajorList && (
-                                <div className="major-list">
+                                <div className="option-list">
                                     {majors.map((major) => (
                                         <div
                                             key={major.code}
-                                            className="major-item"
+                                            className="option-item"
                                             onClick={() => {
                                                 handleMajorSelect(major.code, major.name);
                                                 setSelectedThesis({ ...selectedThesis, major: major.name });
@@ -678,11 +678,11 @@ const Theses = () => {
                                 readOnly
                             />
                             {showSchoolYearList && (
-                                <div className="major-list">
+                                <div className="option-list">
                                     {schoolYears.map((school_year) => (
                                         <div
                                             key={school_year.id}
-                                            className="major-item"
+                                            className="option-item"
                                             onClick={() => {
                                                 handleSchoolYearSelect(school_year.id, school_year.name);
                                                 setSelectedThesis({ ...selectedThesis, school_year: school_year.name });
@@ -772,11 +772,11 @@ const Theses = () => {
                                 readOnly
                             />
                             {showCouncilList && (
-                                <div className="major-list">
+                                <div className="option-list">
                                     {councils.map((council) => (
                                         <div
                                             key={council.id}
-                                            className="major-item"
+                                            className="option-item"
                                             onClick={() => handleCouncilSelect(council.id, council.name)}
                                         >
                                             {council.name}
@@ -795,11 +795,11 @@ const Theses = () => {
                                 readOnly
                             />
                             {showLecturerList && (
-                                <div className="major-list">
+                                <div className="option-list">
                                     {lecturers.map((lecturer) => (
                                         <div
                                             key={lecturer.user}
-                                            className={`major-item ${
+                                            className={`option-item ${
                                                 selectedLecturers.find((l) => l.id === lecturer.user) ? 'selected' : ''
                                             }`}
                                             onClick={() => handleLecturerSelect(lecturer.user, lecturer.full_name)}
@@ -821,11 +821,11 @@ const Theses = () => {
                                 readOnly
                             />
                             {showStudentList && (
-                                <div className="major-list">
+                                <div className="option-list">
                                     {students.map((student) => (
                                         <div
                                             key={student.user}
-                                            className={`major-item ${
+                                            className={`option-item ${
                                                 selectedStudents.find((s) => s.id === student.user) ? 'selected' : ''
                                             }`}
                                             onClick={() => handleStudentSelect(student.user, student.full_name)}
@@ -848,11 +848,11 @@ const Theses = () => {
                                 readOnly
                             />
                             {showMajorList && (
-                                <div className="major-list">
+                                <div className="option-list">
                                     {majors.map((major) => (
                                         <div
                                             key={major.code}
-                                            className="major-item"
+                                            className="option-item"
                                             onClick={() => handleMajorSelect(major.code, major.name)}
                                         >
                                             {major.name}
@@ -871,11 +871,11 @@ const Theses = () => {
                                 readOnly
                             />
                             {showSchoolYearList && (
-                                <div className="major-list">
+                                <div className="option-list">
                                     {schoolYears.map((school_year) => (
                                         <div
                                             key={school_year.id}
-                                            className="major-item"
+                                            className="option-item"
                                             onClick={() => handleSchoolYearSelect(school_year.id, school_year.name)}
                                         >
                                             {school_year.name}
