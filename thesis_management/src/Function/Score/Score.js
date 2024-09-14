@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { MyUserContext } from '../../configs/Contexts';
-import { Button, Modal, Form, Spinner, Card, ListGroup } from 'react-bootstrap';
+import { Button, Modal, Form, Spinner, Card, ListGroup, Alert } from 'react-bootstrap';
 import './Score.css';
 import { authApi, endpoints } from '../../configs/APIs';
 
@@ -126,8 +126,6 @@ const Score = () => {
                             Authorization: `Bearer ${token}`,
                         },
                     });
-
-                    console.log('Form Data Array:', formData);
                 } catch (error) {
                     const errorMessage = JSON.stringify(error.response.data).replace(/[{}"]/g, '');
                     if (!errorMessagesSet.has(errorMessage)) {
@@ -163,7 +161,6 @@ const Score = () => {
             if (allScoresValid && token) {
                 const success = await addScore(selectedThesis.id, formDataArray, token);
                 if (success) {
-                    // console.log('Tất cả điểm được thêm thành công');
                     setModalVisible(false);
                 }
             } else {
@@ -266,6 +263,14 @@ const Score = () => {
     const handleViewDetails2 = (item) => {
         setSelectedThesis(item);
         setModalVisible2(true);
+    };
+
+    const handleOpenLink = (url) => {
+        if (url) {
+            window.open(url, '_blank');
+        } else {
+            Alert('Lỗi: Link của file không tồn tại');
+        }
     };
 
     const renderItem = (item) => (
@@ -401,10 +406,10 @@ const Score = () => {
                                     <p className="modalItemText">Link báo cáo: </p>
                                     <a
                                         href="#"
-                                        // onClick={() => handleOpenLink(selectedThesis.reportFile)}
+                                        onClick={() => handleOpenLink(selectedThesis.report_file)}
                                         className="itemLink"
                                     >
-                                        {selectedThesis.reportFile}
+                                        {selectedThesis.report_file}
                                     </a>
                                     <p className="modalItemText bold-text">Giáo viên hướng dẫn:</p>
                                     {selectedThesis.lecturers &&
