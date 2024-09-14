@@ -125,8 +125,8 @@ const Lecturers = () => {
         setShowUpdateModal(false);
         setShowAddModal(false);
         setSelectedLecturer(null);
-        setShowFacultyList(false); // Close department list on modal close
-        setShowGenderList(false); // Close gender list on modal close
+        setShowFacultyList(false);
+        setShowGenderList(false);
     };
 
     const handleUpdateLecturer = async () => {

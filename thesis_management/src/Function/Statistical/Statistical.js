@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bar } from 'react-chartjs-2';
-import { Pie } from 'react-chartjs-2';
-import axios from 'axios';
+import { Bar, Pie } from 'react-chartjs-2';
 import APIs, { endpoints } from '../../configs/APIs';
 import './Statistical.css';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 
-ChartJS.register(
-    CategoryScale, // Thang đo cho các biểu đồ cột và đường
-    LinearScale, // Thang đo cho các trục
-    BarElement, // Phần tử cột
-    Title, // Tiêu đề biểu đồ
-    Tooltip, // Gợi ý
-    Legend, // Chú giải
-    ArcElement, // Phần tử hình tròn cho biểu đồ pie
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
 const Statistical = () => {
     const navigate = useNavigate();
@@ -54,12 +44,6 @@ const Statistical = () => {
         fetchData();
     }, []);
 
-    const chartConfig = {
-        backgroundColor: '#747958',
-        color: () => '#747958',
-        strokeWidth: 2,
-    };
-
     const generateRandomColor = () => {
         const randomColor = Math.floor(Math.random() * 16777215).toString(16);
         return `#${randomColor.padStart(6, '0')}`;
@@ -74,6 +58,9 @@ const Statistical = () => {
         datasets: [
             {
                 data: avgScores.map((item) => item.avg_score),
+                backgroundColor: '#747958',
+                borderColor: '#747958',
+                borderWidth: 1,
             },
         ],
     };
@@ -88,10 +75,41 @@ const Statistical = () => {
         ],
     };
 
+    const commonOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            tooltip: {
+                callbacks: {
+                    title: function (tooltipItem) {
+                        if (selectedView === 'avgScores') {
+                            const dataIndex = tooltipItem[0].dataIndex;
+                            const item = avgScores[dataIndex];
+                            return [`Năm học: ${item.start_year}-${item.end_year}`];
+                        } else {
+                            const dataIndex = tooltipItem[0].dataIndex;
+                            const item = theses[dataIndex];
+                            return [`Khoa: ${item.major_name}`];
+                        }
+                    },
+                    label: function (tooltipItem) {
+                        if (selectedView === 'avgScores') {
+                            return `Điểm trung bình: ${tooltipItem.raw}`;
+                        } else {
+                            return `Số khóa luận: ${tooltipItem.raw}`;
+                        }
+                    },
+                },
+            },
+        },
+    };
+
     return (
         <div className="container">
             <div className="topBackground">
-                <h1>THỐNG KÊ</h1>
+                <h1>THỐNG KÊ VÀ BÁO CÁO</h1>
             </div>
             <div className="radioContainer">
                 <div className="radioButton">
@@ -144,7 +162,7 @@ const Statistical = () => {
                         </table>
                     </div>
                     <div className="stats-chart">
-                        <Bar data={barChartData} options={chartConfig} />
+                        <Bar data={barChartData} options={commonOptions} />
                     </div>
                 </div>
             ) : (
@@ -168,7 +186,7 @@ const Statistical = () => {
                         </table>
                     </div>
                     <div className="stats-chart">
-                        <Pie data={pieChartData} options={chartConfig} />
+                        <Pie data={pieChartData} options={commonOptions} />
                     </div>
                 </div>
             )}
