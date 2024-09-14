@@ -14,6 +14,7 @@ import Theses from './Function/Theses/Theses';
 import Score from './Function/Score/Score';
 import Chat from './Chat/Chat';
 import Statistical from './Function/Statistical/Statistical';
+import Councils from './Function/Councils/Councils';
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
                     <Route path="/score" element={<Score />} />
                     <Route path="/chat/:thesesCode" element={<Chat />} />
                     <Route path="/statistical" element={<Statistical />} />
+                    <Route path="/councils" element={<Councils />} />
                 </Route>
             </Routes>
         </Router>

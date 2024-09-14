@@ -36,11 +36,15 @@ const Councils = () => {
     const [showMember01List, setShowMember01List] = useState(false);
     const [showMember02List, setShowMember02List] = useState(false);
     const [showMemberUpdateList, setShowMemberUpdateList] = useState(false);
+    const [showAddMemberInputs, setShowAddMemberInputs] = useState(false);
 
     const [showMemberFields, setShowMemberFields] = useState(false);
 
     const handleAddMembersClick = () => {
         setShowMemberFields(!showMemberFields);
+        setSelectedMember01(null);
+        setSelectedMember02(null);
+        setShowAddMemberInputs(!showAddMemberInputs);
     };
 
     const [councilName, setCouncilName] = useState('');
@@ -111,7 +115,7 @@ const Councils = () => {
     }, []);
 
     const handleShowMembersModal = (council_Id) => {
-        loadMembers(council_Id); // Fetch members data
+        loadMembers(council_Id);
         setShowMembersModal(true);
     };
 
@@ -168,6 +172,7 @@ const Councils = () => {
         setShowMembersModal(false);
         setShowUpdateMemberModal(false);
         setSelectedUpdateMember(null);
+        setShowAddMemberInputs(false);  
     };
 
     const handleCloseUpdateMemberModal = () => {
@@ -275,7 +280,7 @@ const Councils = () => {
         setShowDeleteModal(true);
     };
 
-    const confirmDeleteThesis = async () => {
+    const confirmDeleteCouncil = async () => {
         if (councilToDelete) {
             try {
                 await APIs.delete(endpoints['delete-council'](councilToDelete));
@@ -390,18 +395,52 @@ const Councils = () => {
             }
         }
     };
+    
+    const handleAddMember = async () => {
+        setLoading(true);
+        try {
+            const councilDetails = [];
+
+            if (selectedMember01) {
+                councilDetails.push({ position: 4, lecturer: selectedMember01.user, council: selectedCouncil.id });
+            }
+
+            if (selectedMember02) {
+                councilDetails.push({ position: 5, lecturer: selectedMember02.user, council: selectedCouncil.id });
+            }
+
+            console.log(councilDetails);
+
+            for (const detail of councilDetails) {
+                await APIs.post(endpoints['council_details'], detail, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'X-CSRFToken': 'LxGlGW539zpgT1OAzXIzW6GmxyHKK2Bl2sKYmispivUORsp7PLNV9xJFgTCUqqB7',
+                    },
+                });
+            }
+
+            alert('Thêm thành viên thành công');
+            loadMembers(selectedCouncil.id);
+        } catch (error) {
+            console.error(error);
+            alert('Lỗi trùng lặp giảng viên! Vui lòng chọn lại.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div>
             <div>
-                <div className="student-header">
-                    <h1 className="student-title">Quản lý hội đồng</h1>
+                <div className="council-header">
+                    <h1 className="council-title">Quản lý hội đồng</h1>
                 </div>
 
                 {loading && <p>Đang tải...</p>}
                 {error && <Alert variant="danger">{error}</Alert>}
 
-                <div className="students-container">
+                <div className="council-container">
                     <div className="search-container">
                         <input
                             type="text"
@@ -417,7 +456,7 @@ const Councils = () => {
 
                     {/* Bọc bảng trong div có lớp cho phép cuộn ngang */}
                     <div className="table-responsive">
-                        <table className="students-table">
+                        <table className="councils-table">
                             <thead>
                                 <tr>
                                     <th>Mã hội đồng</th>
@@ -487,45 +526,112 @@ const Councils = () => {
                 </Modal.Header>
                 <Modal.Body>
                     {members && members.length > 0 ? (
-                        <table className="members-table">
-                            <thead>
-                                <tr>
-                                    <th>Tên giảng viên</th>
-                                    <th>Vai trò</th>
-                                    <th>Sửa</th>
-                                    <th>Xóa</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {members.map((member) => (
-                                    <tr key={member.id}>
-                                        <td>{member.full_name}</td>
-                                        <td>{member.position}</td>
-                                        <td>
-                                            <button
-                                                type="button"
-                                                className="btn btn-primary"
-                                                onClick={() => handleShowUpdateMemberModal(member)}
-                                            >
-                                                Sửa
-                                            </button>
-                                        </td>
-                                        <td>
-                                            {(member.position === 'Thành viên 01' ||
-                                                member.position === 'Thành viên 02') && (
+                        <>
+                            <table className="members-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tên giảng viên</th>
+                                        <th>Vai trò</th>
+                                        <th>Sửa</th>
+                                        <th>Xóa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {members.map((member) => (
+                                        <tr key={member.id}>
+                                            <td>{member.full_name}</td>
+                                            <td>{member.position}</td>
+                                            <td>
                                                 <button
                                                     type="button"
-                                                    className="btn btn-danger"
-                                                    onClick={() => handleDeleteMember(member.id)}
+                                                    className="btn btn-primary"
+                                                    onClick={() => handleShowUpdateMemberModal(member)}
                                                 >
-                                                    Xóa
+                                                    Sửa
                                                 </button>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                            </td>
+                                            <td>
+                                                {(member.position === 'Thành viên 01' ||
+                                                    member.position === 'Thành viên 02') && (
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-danger"
+                                                        onClick={() => handleDeleteMember(member.id)}
+                                                    >
+                                                        Xóa
+                                                    </button>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            {members.length < 5 && (
+                                <Button variant="primary" onClick={handleAddMembersClick}>
+                                    +
+                                </Button>
+                            )}
+                            {showAddMemberInputs && (
+                                <>
+                                    {members.length === 3 && (
+                                        <Form.Group controlId="formMember01">
+                                        <Form.Label>Thành viên 01</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Chọn thành viên 01"
+                                            value={selectedMember01?.full_name || ''}
+                                            onClick={handleMember01InputClick}
+                                            readOnly
+                                        />
+                                        {showMember01List && (
+                                            <div className="select-list">
+                                                {lecturers.map((lecturer) => (
+                                                    <div
+                                                        key={lecturer.user}
+                                                        className="select-item"
+                                                        onClick={() => {
+                                                            setSelectedMember01(lecturer);
+                                                            setShowMember01List(false);
+                                                        }}
+                                                    >
+                                                        {lecturer.full_name}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                        </Form.Group>
+                                    )}
+                                    {members.length <= 4 && (
+                                        <Form.Group controlId="formMember02">
+                                        <Form.Label>Thành viên 02</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Chọn thành viên 02"
+                                            value={selectedMember02?.full_name || ''}
+                                            onClick={handleMember02InputClick}
+                                            readOnly
+                                        />
+                                        {showMember02List && (
+                                            <div className="select-list">
+                                                {lecturers.map((lecturer) => (
+                                                    <div
+                                                        key={lecturer.user}
+                                                        className="select-item"
+                                                        onClick={() => {
+                                                            setSelectedMember02(lecturer);
+                                                            setShowMember02List(false);
+                                                        }}
+                                                    >
+                                                        {lecturer.full_name}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                        </Form.Group>
+                                    )}
+                                </>
+                            )}
+                        </>
                     ) : (
                         <p>Không có thành viên nào.</p>
                     )}
@@ -534,6 +640,11 @@ const Councils = () => {
                     <Button variant="secondary" onClick={handleCloseModal}>
                         Đóng
                     </Button>
+                    {showAddMemberInputs && (
+                        <Button variant="primary" onClick={handleAddMember}>
+                            Thêm
+                        </Button>
+                    )}
                 </Modal.Footer>
             </Modal>
 
@@ -636,7 +747,7 @@ const Councils = () => {
                     <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
                         Hủy
                     </Button>
-                    <Button variant="danger" onClick={confirmDeleteThesis}>
+                    <Button variant="danger" onClick={confirmDeleteCouncil}>
                         Xóa
                     </Button>
                 </Modal.Footer>
@@ -839,4 +950,4 @@ const Councils = () => {
     );
 };
 
-export default Councils;
+export default Councils;    

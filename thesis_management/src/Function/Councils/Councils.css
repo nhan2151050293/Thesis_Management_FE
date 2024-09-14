@@ -1,5 +1,5 @@
 /* Container cho các item sinh viên */
-.students-container {
+.council-container {
     display: flex;
     flex-wrap: wrap; /* Cho phép các phần tử tự động xuống hàng khi cần */
     gap: 20px; /* Khoảng cách giữa các phần tử */
@@ -7,23 +7,8 @@
     justify-content: center;
 }
 
-/* Style cho mỗi phần tử sinh viên */
-.student-item {
-    width: 48%; /* Mỗi phần tử chiếm 50% chiều rộng của container, trừ khoảng cách giữa các phần tử */
-    text-align: center;
-    box-sizing: border-box; /* Đảm bảo padding và border không làm thay đổi kích thước phần tử */
-    padding: 16px 0;
-    margin-top: 12px;
-    border: 1px solid #ddd; /* Đường viền mỏng */
-    border-radius: 5px; /* Bo góc */
-    background-color: #fff; /* Nền trắng */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-    /* Tùy chỉnh kiểu chữ và căn chỉnh */
-    min-width: 300px; /* Đảm bảo mỗi item có chiều rộng tối thiểu */
-}
-
 /* Tiêu đề của trang */
-.student-header {
+.council-header {
     display: flex; /* Use Flexbox */
     align-items: center; /* Center align vertically */
     justify-content: center; /* Center align horizontally */
@@ -34,30 +19,30 @@
 }
 
 /* Tiêu đề sinh viên */
-.student-title {
+.council-title {
     font-size: 24px;
     color: #dee1d7;
 }
 
-.students-table {
+.councils-table {
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
 }
 
-.students-table th,
-.students-table td {
+.councils-table th,
+.councils-table td {
     text-align: center; /* Center align text */
     padding: 8px; /* Add padding for spacing */
     border: 1px solid #ddd; /* Add border for table cells */
 }
 
-.students-table th {
+.councils-table th {
     background-color: #f2f2f2; /* Add a background color to headers */
     font-weight: bold;
 }
 
-.students-table tbody tr:hover {
+.councils-table tbody tr:hover {
     background-color: #f9f9f9; /* Add hover effect for table rows */
 }
 
@@ -113,20 +98,20 @@
     flex: 1;
 }
 
-.students-table {
+.councils-table {
     width: 100%; /* Đảm bảo bảng chiếm toàn bộ chiều rộng của container */
     border-collapse: collapse; /* Loại bỏ khoảng cách giữa các ô bảng */
 }
 
-.students-table th,
-.students-table td {
+.councils-table th,
+.councils-table td {
     white-space: nowrap; /* Không xuống dòng nội dung */
     text-align: center; /* Căn giữa ngang cho văn bản trong các ô */
     vertical-align: middle; /* Căn giữa dọc cho văn bản trong các ô */
     padding: 8px; /* Khoảng cách bên trong các ô */
 }
 
-.students-table th {
+.councils-table th {
     background-color: #f8f9fa; /* Màu nền cho tiêu đề bảng */
 }
 
