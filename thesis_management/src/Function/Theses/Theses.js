@@ -454,7 +454,7 @@ const Theses = () => {
         <div>
             <div>
                 <div className="thesis-header">
-                    <h1 className="thesis-title">Quản lý khóa luận</h1>
+                    <h1 className="thesis-title">QUẢN LÍ KHÓA LUẬN</h1>
                 </div>
 
                 {loading && <p>Đang tải...</p>}

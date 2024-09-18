@@ -67,9 +67,9 @@ const Score = () => {
         fetchTheses();
     }, [user.id, token]);
 
-    const handleBack = () => {
-        nav.navigate('/home');
-    };
+    // const handleBack = () => {
+    //     nav.navigate('/home');
+    // };
 
     const handleViewDetails = async (item) => {
         setSelectedThesis(item);
@@ -300,9 +300,6 @@ const Score = () => {
     return (
         <div>
             <div className="header">
-                <Button onClick={handleBack} variant="outline-primary">
-                    Quay lại
-                </Button>
                 <h1>Quản lý điểm</h1>
             </div>
             {loading ? (

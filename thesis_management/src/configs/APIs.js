@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://192.168.1.9:8000/';
+const BASE_URL = 'http://192.168.2.201:8000/';
 
 export const endpoints = {
     users: '/users/',
@@ -25,7 +25,7 @@ export const endpoints = {
     'update-council': (council_id) => `/councils/${council_id}/`,
     'delete-council': (council_id) => `/councils/${council_id}/`,
     councils: '/councils/',
-    'council_details': '/council_details/members/',
+    council_details: '/council_details/members/',
     council_details_id: '/council_details/',
     'update-council-detail': (council_detail_id) => `/council_details/${council_detail_id}/`,
     'delete-council-detail': (council_detail_id) => `/council_details/${council_detail_id}/`,

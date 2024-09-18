@@ -1,3 +1,6 @@
+.container {
+    background-color: #dee1d7;
+}
 /* Container cho các item sinh viên */
 .council-container {
     display: flex;
@@ -16,12 +19,16 @@
     margin-bottom: 20px;
     background-color: #747958;
     height: 80px;
+    padding-left: 350px;
+    padding-right: 350px;
 }
 
 /* Tiêu đề sinh viên */
 .council-title {
     font-size: 24px;
-    color: #dee1d7;
+    color: WHITE;
+    font-weight: bold;
+    width: 500px;
 }
 
 .councils-table {
@@ -34,12 +41,13 @@
 .councils-table td {
     text-align: center; /* Center align text */
     padding: 8px; /* Add padding for spacing */
-    border: 1px solid #ddd; /* Add border for table cells */
+    border: 1px solid #747958; /* Add border for table cells */
 }
 
 .councils-table th {
-    background-color: #f2f2f2; /* Add a background color to headers */
+    background-color: #747958; /* Add a background color to headers */
     font-weight: bold;
+    color: #747958;
 }
 
 .councils-table tbody tr:hover {

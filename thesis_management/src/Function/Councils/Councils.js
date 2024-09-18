@@ -172,7 +172,7 @@ const Councils = () => {
         setShowMembersModal(false);
         setShowUpdateMemberModal(false);
         setSelectedUpdateMember(null);
-        setShowAddMemberInputs(false);  
+        setShowAddMemberInputs(false);
     };
 
     const handleCloseUpdateMemberModal = () => {
@@ -395,7 +395,7 @@ const Councils = () => {
             }
         }
     };
-    
+
     const handleAddMember = async () => {
         setLoading(true);
         try {
@@ -432,9 +432,9 @@ const Councils = () => {
 
     return (
         <div>
-            <div>
+            <div className="container">
                 <div className="council-header">
-                    <h1 className="council-title">Quản lý hội đồng</h1>
+                    <h1 className="council-title">QUẢN LÍ HỘI ĐỒNG</h1>
                 </div>
 
                 {loading && <p>Đang tải...</p>}
@@ -575,58 +575,58 @@ const Councils = () => {
                                 <>
                                     {members.length === 3 && (
                                         <Form.Group controlId="formMember01">
-                                        <Form.Label>Thành viên 01</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Chọn thành viên 01"
-                                            value={selectedMember01?.full_name || ''}
-                                            onClick={handleMember01InputClick}
-                                            readOnly
-                                        />
-                                        {showMember01List && (
-                                            <div className="select-list">
-                                                {lecturers.map((lecturer) => (
-                                                    <div
-                                                        key={lecturer.user}
-                                                        className="select-item"
-                                                        onClick={() => {
-                                                            setSelectedMember01(lecturer);
-                                                            setShowMember01List(false);
-                                                        }}
-                                                    >
-                                                        {lecturer.full_name}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
+                                            <Form.Label>Thành viên 01</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Chọn thành viên 01"
+                                                value={selectedMember01?.full_name || ''}
+                                                onClick={handleMember01InputClick}
+                                                readOnly
+                                            />
+                                            {showMember01List && (
+                                                <div className="select-list">
+                                                    {lecturers.map((lecturer) => (
+                                                        <div
+                                                            key={lecturer.user}
+                                                            className="select-item"
+                                                            onClick={() => {
+                                                                setSelectedMember01(lecturer);
+                                                                setShowMember01List(false);
+                                                            }}
+                                                        >
+                                                            {lecturer.full_name}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </Form.Group>
                                     )}
                                     {members.length <= 4 && (
                                         <Form.Group controlId="formMember02">
-                                        <Form.Label>Thành viên 02</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Chọn thành viên 02"
-                                            value={selectedMember02?.full_name || ''}
-                                            onClick={handleMember02InputClick}
-                                            readOnly
-                                        />
-                                        {showMember02List && (
-                                            <div className="select-list">
-                                                {lecturers.map((lecturer) => (
-                                                    <div
-                                                        key={lecturer.user}
-                                                        className="select-item"
-                                                        onClick={() => {
-                                                            setSelectedMember02(lecturer);
-                                                            setShowMember02List(false);
-                                                        }}
-                                                    >
-                                                        {lecturer.full_name}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
+                                            <Form.Label>Thành viên 02</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Chọn thành viên 02"
+                                                value={selectedMember02?.full_name || ''}
+                                                onClick={handleMember02InputClick}
+                                                readOnly
+                                            />
+                                            {showMember02List && (
+                                                <div className="select-list">
+                                                    {lecturers.map((lecturer) => (
+                                                        <div
+                                                            key={lecturer.user}
+                                                            className="select-item"
+                                                            onClick={() => {
+                                                                setSelectedMember02(lecturer);
+                                                                setShowMember02List(false);
+                                                            }}
+                                                        >
+                                                            {lecturer.full_name}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </Form.Group>
                                     )}
                                 </>
@@ -950,4 +950,4 @@ const Councils = () => {
     );
 };
 
-export default Councils;    
+export default Councils;

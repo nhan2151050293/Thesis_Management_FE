@@ -1,0 +1,109 @@
+.container {
+    padding: 20px;
+}
+
+.TopBackGround {
+    background-color: #747958;
+    padding: 20px;
+    text-align: center;
+}
+
+.greeting {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+}
+
+.filterContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.Body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.itemContainer {
+    background-color: #fff;
+    border: 2px solid #747958;
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.itemKind {
+    font-weight: bold;
+    font-size: 16px;
+    color: #747958;
+    margin-bottom: 10px;
+}
+
+.item {
+    margin-bottom: 10px;
+}
+
+.itemText {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+.button {
+    background-color: #747958;
+}
+
+.button:hover {
+    background-color: #a3a88a;
+}
+
+.buttonDetail {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.modalContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalContent {
+    padding: 20px;
+}
+
+.modalInfo {
+    margin-bottom: 20px;
+}
+
+.modalItemText {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.modalItemTitle {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
+a {
+    color: #747958;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

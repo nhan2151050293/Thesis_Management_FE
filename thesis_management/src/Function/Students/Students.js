@@ -78,7 +78,6 @@ const Students = () => {
         loadMajors();
     }, []);
 
-
     const handleDelete = (studentId) => {
         setStudentToDelete(studentId);
         setShowDeleteModal(true);
@@ -255,12 +254,11 @@ const Students = () => {
         setNewStudent({ ...newStudent, gender });
         setShowGenderList(false);
     };
-    
 
     return (
-        <div>
+        <div className="container">
             <div className="student-header">
-                <h1 className="student-title">Quản lý sinh viên</h1>
+                <h1 className="student-title">QUẢN LÍ SINH VIÊN</h1>
             </div>
 
             {loading && <p>Đang tải...</p>}

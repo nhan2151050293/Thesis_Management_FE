@@ -15,6 +15,7 @@ import Score from './Function/Score/Score';
 import Chat from './Chat/Chat';
 import Statistical from './Function/Statistical/Statistical';
 import Councils from './Function/Councils/Councils';
+import ListTheses from './Function/Theses/ListTheses';
 
 function App() {
     return (
@@ -34,6 +35,7 @@ function App() {
                     <Route path="/chat/:thesesCode" element={<Chat />} />
                     <Route path="/statistical" element={<Statistical />} />
                     <Route path="/councils" element={<Councils />} />
+                    <Route path="/listtheses" element={<ListTheses />} />
                 </Route>
             </Routes>
         </Router>

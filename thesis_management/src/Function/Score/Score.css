@@ -3,10 +3,15 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    padding: 10px;
+    background-color: #747958; /* Màu nền header để dễ nhìn */
+    position: sticky; /* Giữ header cố định khi scroll */
+    top: 0;
+    z-index: 1000; /* Đảm bảo header nằm trên mọi thành phần khác */
 }
 
-.header .btn {
-    margin-left: auto;
+.list {
+    margin-top: 40px; /* Đẩy danh sách xuống dưới header */
 }
 
 .card {
@@ -56,4 +61,16 @@ button {
 
 .bold-text {
     font-weight: bold;
+}
+
+.list {
+    margin-top: 100px;
+    padding-top: 100px; /* Điều chỉnh để đảm bảo phần list không bị che bởi header */
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }

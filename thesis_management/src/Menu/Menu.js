@@ -33,7 +33,7 @@ const Menu = () => {
                             Quản lí khóa luận
                         </button>
                         <button className="Menu-button" onClick={() => handleNavigation('/councils')}>
-                            Quản lí hội đồng    
+                            Quản lí hội đồng
                         </button>
                         <button className="Menu-button" onClick={() => handleNavigation('/statistical')}>
                             Thống kê
@@ -48,7 +48,7 @@ const Menu = () => {
                         <button className="Menu-button" onClick={() => handleNavigation('/councils')}>
                             Hội đồng tham gia
                         </button>
-                        <button className="Menu-button" onClick={() => handleNavigation('/ccc')}>
+                        <button className="Menu-button" onClick={() => handleNavigation('/listtheses')}>
                             Danh sách khóa luận hướng dẫn
                         </button>
                     </div>

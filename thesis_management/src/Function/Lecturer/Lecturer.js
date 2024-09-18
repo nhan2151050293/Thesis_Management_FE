@@ -241,9 +241,9 @@ const Lecturers = () => {
     };
 
     return (
-        <div>
+        <div className="container">
             <div className="lecturer-header">
-                <h1 className="lecturer-title">Quản lý giảng viên</h1>
+                <h1 className="lecturer-title">QUẢN LÍ GIẢNG VIÊN</h1>
             </div>
 
             {loading && <p>Đang tải...</p>}
