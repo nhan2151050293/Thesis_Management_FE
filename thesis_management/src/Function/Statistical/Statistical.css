@@ -1,9 +1,10 @@
-.container {
+.stt-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
     font-family: Arial, sans-serif;
+    background-color: #dee1d7;
 }
 
 .topBackground {
@@ -19,7 +20,8 @@
     width: 100%;
     padding: 10px;
     border-radius: 10px;
-    background-color: rgb(178, 209, 199);
+    background-color: #a3a88a;
+    margin-bottom: 50px;
 }
 
 .radioButton {
@@ -45,6 +47,7 @@
 .stats-container {
     width: 100%;
     display: flex;
+    padding-bottom: 110px;
 }
 
 .data-table th,

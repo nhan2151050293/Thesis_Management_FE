@@ -256,7 +256,7 @@ const Students = () => {
     };
 
     return (
-        <div className="container">
+        <div className="std-container">
             <div className="student-header">
                 <h1 className="student-title">QUẢN LÍ SINH VIÊN</h1>
             </div>

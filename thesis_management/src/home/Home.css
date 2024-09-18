@@ -1,250 +1,248 @@
 .home-container {
-  padding-left: 2px;
-  background-color: #dee1d7;
-  background-size: cover;
+    padding-left: 2px;
+    background-color: #dee1d7;
+    background-size: cover;
 }
 
 .header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-  background-color: #747958;
-  color: #dee1d7;
-  position: fixed;
-  width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #747958;
+    color: #dee1d7;
+    position: fixed;
+    width: 100%;
 }
 
 .header h1 {
-  font-size: 4rem;
-  padding-right: 250px;
+    font-size: 4rem;
+    padding-right: 250px;
 }
 
 .post-input {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  margin-left: 3%;
-  margin-right: 3%;
-  padding-top: 10%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-left: 3%;
+    margin-right: 3%;
 }
 
 .post-input-field {
-  flex: 1;
-  border: 1px solid #747958;
-  border-radius: 20px;
-  padding: 10px;
-  margin-left: 10px;
+    flex: 1;
+    border: 1px solid #747958;
+    border-radius: 20px;
+    padding: 10px;
+    margin-left: 10px;
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-  border: 1px solid #747958;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 1px solid #747958;
 }
 
 .posts {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .post-container {
-  padding-bottom: 2%;
-  margin-left: 7%;
-  margin-right:5%;
+    padding-bottom: 2%;
+    margin-left: 7%;
+    margin-right: 5%;
 }
 
 .account {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .username {
-  font-weight: bold;
-  font-size: 16px;
-  color: #747958;
+    font-weight: bold;
+    font-size: 16px;
+    color: #747958;
 }
 
 .post-item {
-  border: 2px solid #747958;
-  padding: 20px;
-  background-color: #dee1d7;
+    border: 2px solid #747958;
+    padding: 20px;
+    background-color: #dee1d7;
 }
 
 .post-content {
-  font-size: 16px;
+    font-size: 16px;
 }
 
 .read-more {
-  margin-top: 10px;
-  color: #747958;
-  border: none;
-  background: none;
-  cursor: pointer;
+    margin-top: 10px;
+    color: #747958;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 
 .actions {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
 }
 
 .actions button {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 .actions {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
 }
 
 .action-button {
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: #747958;
-  font-size: 1.5rem;
-  margin-right: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #747958;
+    font-size: 1.5rem;
+    margin-right: 10px;
 }
 
 .header-icons {
-  position: absolute;
-  bottom: 10px;
-  display: flex;
-  gap: 10px;
-  right: 21%;
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    gap: 10px;
+    right: 21%;
 }
 
 .icon-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-  color: #dee1d7;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #dee1d7;
 }
 
 .icon-button:hover {
-  color: #8F9668;
+    color: #8f9668;
 }
 
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-content {
-  background: #dee1d7;
-  padding: 20px;
-  border-radius: 8px;
-  position: relative;
-  width: 600px;
-  height: 600px;
-  display: flex;
-  flex-direction: column;
+    background: #dee1d7;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    width: 600px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
 }
 
 .comments {
-  flex: 1;
-  margin-bottom: 20px;
-  border: 1px solid #747958;
-  border-radius: 8px;
-  padding: 10px;
-  overflow-y: auto;
-  max-height: 300px; 
+    flex: 1;
+    margin-bottom: 20px;
+    border: 1px solid #747958;
+    border-radius: 8px;
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 300px;
 }
 
 .comment-item {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .comment-username {
-  font-weight: bold;
-  margin-bottom: 5px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .comment-button,
 .post-button,
 .close-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
 }
 
-
 .post-content-container {
-  flex: 1;
-  margin-bottom: 20px;
-  border: 1px solid #747958;
-  border-radius: 8px;
-  padding: 10px;
-  overflow-y: auto;
-  max-height: 150px; 
+    flex: 1;
+    margin-bottom: 20px;
+    border: 1px solid #747958;
+    border-radius: 8px;
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 150px;
 }
 
 .comment-input-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .comment-textarea {
-  width: 100%;
-  height: 80px;
-  padding: 10px 50px 10px 10px; 
-  border: 1px solid #747958;
-  border-radius: 8px;
-  resize: none;
-  box-sizing: border-box;
-  background-color: #dee1d7;
+    width: 100%;
+    height: 80px;
+    padding: 10px 50px 10px 10px;
+    border: 1px solid #747958;
+    border-radius: 8px;
+    resize: none;
+    box-sizing: border-box;
+    background-color: #dee1d7;
 }
 
 .comment-send-icon {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-  color: #747958;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #747958;
 }
 
 .comment-send-icon:disabled {
-  color: #ccc;
-  cursor: not-allowed;
+    color: #ccc;
+    cursor: not-allowed;
 }
 
-.close-modal-icon{
-  background-color: #dee1d7;
-  position: absolute;
-  right: 4%;
-  border: none;
-  color: #747958;
+.close-modal-icon {
+    background-color: #dee1d7;
+    position: absolute;
+    right: 4%;
+    border: none;
+    color: #747958;
 }
 
 .post-textarea {
-  width: 100%;
-  height: 500px;
-  padding: 10px 50px 10px 10px; 
-  border: 1px solid #747958;
-  border-radius: 8px;
-  resize: none;
-  box-sizing: border-box;
-  background-color: #dee1d7;
+    width: 100%;
+    height: 500px;
+    padding: 10px 50px 10px 10px;
+    border: 1px solid #747958;
+    border-radius: 8px;
+    resize: none;
+    box-sizing: border-box;
+    background-color: #dee1d7;
 }

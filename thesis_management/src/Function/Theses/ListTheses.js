@@ -65,7 +65,7 @@ const ListTheses = () => {
     const formattedEndDate = end_date ? moment(end_date).format('DD-MM-YYYY') : 'N/A';
 
     return (
-        <div className="container">
+        <div className="lstcontainer">
             <div className="TopBackGround">
                 <h1 className="greeting">DANH SÁCH KHÓA LUẬN</h1>
             </div>

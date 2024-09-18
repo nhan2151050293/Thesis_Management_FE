@@ -432,7 +432,7 @@ const Councils = () => {
 
     return (
         <div>
-            <div className="container">
+            <div className="ccl-container">
                 <div className="council-header">
                     <h1 className="council-title">QUẢN LÍ HỘI ĐỒNG</h1>
                 </div>

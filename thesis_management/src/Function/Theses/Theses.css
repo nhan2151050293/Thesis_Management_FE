@@ -1,7 +1,7 @@
-.study-container {
+.thesis-container {
     background-color: #dee1d7;
-    margin-left: 500px;
 }
+
 /* Container cho các item sinh viên */
 .theses-container {
     display: flex;
@@ -19,19 +19,13 @@
     text-align: center;
     margin-bottom: 20px;
     background-color: #747958;
-    height: 100px;
-    margin-left: 4px;
-    margin-right: 4px;
-    padding-left: 350px;
-    padding-right: 350px;
+    height: 80px;
 }
 
 /* Tiêu đề sinh viên */
 .thesis-title {
     font-size: 24px;
-    color: WHITE;
-    font-weight: bold;
-    width: 500px;
+    color: white;
 }
 
 .theses-table {
@@ -45,7 +39,7 @@
 .theses-table td {
     text-align: center; /* Center align text */
     padding: 8px; /* Add padding for spacing */
-    border: 1px solid #ddd; /* Add border for table cells */
+    border: 1px solid #747958; /* Add border for table cells */
 }
 
 .theses-table th {

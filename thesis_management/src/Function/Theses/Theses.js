@@ -452,7 +452,7 @@ const Theses = () => {
 
     return (
         <div>
-            <div>
+            <div className="thesis-container">
                 <div className="thesis-header">
                     <h1 className="thesis-title">QUẢN LÍ KHÓA LUẬN</h1>
                 </div>

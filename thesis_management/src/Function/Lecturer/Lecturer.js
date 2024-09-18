@@ -241,7 +241,7 @@ const Lecturers = () => {
     };
 
     return (
-        <div className="container">
+        <div className="ltt-container">
             <div className="lecturer-header">
                 <h1 className="lecturer-title">QUẢN LÍ GIẢNG VIÊN</h1>
             </div>

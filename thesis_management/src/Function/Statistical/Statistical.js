@@ -107,7 +107,7 @@ const Statistical = () => {
     };
 
     return (
-        <div className="container">
+        <div className="stt-container">
             <div className="topBackground">
                 <h1>THỐNG KÊ VÀ BÁO CÁO</h1>
             </div>
